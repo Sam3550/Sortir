@@ -6,13 +6,12 @@ use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
-use App\Entity\Serie;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -40,12 +39,15 @@ class AppFixtures extends Fixture
 
 
         //Etat
-        $etat = new Etat();
-        $etat
-            ->setLibelle($faker->randomElement(['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Activité terminée', 'Activité archivée', 'Annulée']));
-        $manager->persist($etat);
-        $etats[] = $etat;
+        $tabEtats = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Activité terminée', 'Activité archivée', 'Annulée'];
 
+        foreach ($tabEtats as $et){
+            $etat = new Etat();
+            $etat
+                ->setLibelle($et);
+            $manager->persist($etat);
+            $etats[] = $etat;
+        }
         //Ville
         for ($i = 0;
              $i < 20;
@@ -113,12 +115,12 @@ class AppFixtures extends Fixture
             $sortie
                 ->setNom($faker->realText(10))
                 ->setDateHeureDebut(new \DateTime())
-                ->setDuree($faker->realText(20))
-                ->setDateLimiteInscription($faker->date())
+                ->setDuree($faker->randomNumber())
+                ->setDateLimiteInscription($faker->dateTime())
                 ->setNbInscriptionMax($faker->numberBetween(15, 20))
                 ->setInfosSortie($faker->realText(500));
             $sortie
-                ->setCampus($faker->randomElement($campus))
+                ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etats))
                 ->setLieu($faker->randomElement($lieux))
                 ->addParticipant($faker->randomElement($participants));
