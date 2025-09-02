@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+ {% block body %}
+     <h1>
+         Afficher une sortie
+     </h1>
+
+
+     <table class="min-w-full" style="border: 1px solid black" >
+         <tr>
+             <th>Nom de la sortie</th>
+             <th>Date de la sortie</th>
+             <th>Clôture</th>
+             <th>Inscrits/places</th>
+             <th>Etat</th>
+             <th>Inscrit</th>
+             <th>Organisateur</th>
+             <th>Actions</th>
+         </tr>
+
+         {% for sortie in sorties %}
+             <tr>
+                 <td>{{ sortie.nom }}</td>
+{#                 <td>{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</td>#}
+                 <td>{{ sortie.lieu.nom }}</td>
+             </tr>
+         {% else %}
+             <tr>
+                 <td colspan="3">Aucune sortie trouvée</td>
+             </tr>
+         {% endfor %}
+     </table>
+
+ {% endblock %}
+

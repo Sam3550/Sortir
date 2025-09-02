@@ -10,14 +10,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
 {
-    #[Route('/list/{id}', name: 'list')]
-    public function list(SortieRepository $sortieRepository, int $idList): Response
+    #[Route('/list', name: 'list')]
+    public function list(SortieRepository $sortieRepository): Response
     {
-        $sortie = $sortieRepository->find($idList);
-        dump($sortie);
+        $sorties = $sortieRepository->findAll();
+//        dd($sorties);
 
-        return $this->render('sortie/afficher.html.twig',[
-            'sortie' => $sortie,
+        return $this->render('sortie/list.html.twig',[
+            'sorties' => $sorties
         ]);
     }
 }
