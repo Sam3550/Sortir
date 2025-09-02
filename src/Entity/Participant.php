@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-class Participant
+class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,6 +32,20 @@ class Participant
 
     #[ORM\Column]
     private ?bool $actif = null;
+
+    #[ORM\Column]
+    private ?bool $organisateur = false;
+
+    public function getOrganisateur(): ?bool
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?bool $organisateur): void
+    {
+        $this->organisateur = $organisateur;
+    }
+
 
     /**
      * @var Collection<int, Sortie>
@@ -195,5 +209,10 @@ class Participant
         $this->campus = $campus;
 
         return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        // TODO: Implement getPassword() method.
     }
 }
