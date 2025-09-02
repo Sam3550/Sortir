@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une série</h1>
+
+    {{ form_start(addSortieForm) }}
+    {{ form_widget(addSortieForm) }}
+    <button>Ajouter une sortie</button>
+    {{ form_end(addSortieForm) }}
+{% endblock %}
