@@ -31,8 +31,20 @@
                         {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y') : 'pas de date' }}
                     </td>
 
-                    <td class="border border-gray-400 px-4 py-2">{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.participants|length }}
+                        /{{ sortie.nbInscriptionMax }}</td>
                     <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle }}</td>
+
+
+                    <td class="border border-gray-400 px-4 py-2 text-center">
+                            {% if app.user in sortie.participants %}
+                                X
+                            {% endif %}
+                    </td>
+
+
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.organisateur.nom }}</td>
+                    {#                <td class="border border-gray-400 px-4 py-2">{{ sortie.action }}</td> #}
                 </tr>
             {% else %}
                 <tr>

@@ -14,10 +14,9 @@ final class SortieController extends AbstractController
     public function list(SortieRepository $sortieRepository): Response
     {
         $sorties = $sortieRepository->findAll();
-//        dd($sorties);
-
-        return $this->render('sortie/list.html.twig',[
-            'sorties' => $sorties
+        dd($sorties);
+        return $this->render('sortie/list.html.twig', [
+            'sorties' => $sorties,
         ]);
     }
 }
