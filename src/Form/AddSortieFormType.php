@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType; // ✅ Bon import
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,6 +49,16 @@ class AddSortieFormType extends AbstractType
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
             ])
+            ->add('enregistrer', SubmitType::class, [
+                'label' => 'Enregistrer'
+            ])
+            ->add('publier', SubmitType::class, [
+                'label' => 'Publier la sortie'
+            ])
+            ->add('annuler', SubmitType::class, [
+                'label' => 'Annuler'
+            ])
+
         ;
     }
 
