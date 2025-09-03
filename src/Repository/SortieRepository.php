@@ -2,19 +2,89 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\Models\SortieSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Sortie>
- */
+
 class SortieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sortie::class);
     }
+
+    public function findByFilters(SortieSearch $filters, ?Participant $user): array
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        $this->applyFilters($qb, $filters, $user);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function applyFilters(QueryBuilder $qb, SortieSearch $filters, ?Participant $user): void
+    {
+        $now = new \DateTime();
+
+        if ($filters->getCampus()) {
+            $qb->andWhere('s.campus = :campus')
+                ->setParameter('campus', $filters->getCampus());
+        }
+        if ($filters->getSortieNom()) {
+            $qb->andWhere('s.nom LIKE :nom')
+                ->setParameter('nom', '%'.$filters->getSortieNom().'%');
+        }
+        if ($filters->getPremiereDate()) {
+            $qb->andWhere('s.dateHeureDebut >= :dateDebut')
+                ->setParameter('dateDebut', $filters->getPremiereDate()->format('Y-m-d'));
+        }
+        if ($filters->getDerniereDate()){
+            $qb->andWhere('s.dateHeureDebut <= :dateFin')
+                ->setParameter('dateFin', $filters->getDerniereDate()->format('Y-m-d'));
+        }
+
+//        if ($filters->isSortiesOrganisees()){
+//            $qb->andWhere('s.organisateur = :user')
+//                ->setParameter('user', $user );
+//        }
+//
+//        if ($filters->isSortiesInscrites()){
+//            $qb->join('s.participants', 'i_inscrit')
+//                ->andWhere('i_inscrit.participant = :user')
+//                ->setParameter('user', $user);
+//        }
+//
+//        if ($filters->isSortiesNonInscrites()){
+//            $qb->join('s.participants', 'i_non_inscrit')
+//                ->andWhere('i_non_inscrit.participant != :user')
+//                ->setParameter('user', $user);
+//        }
+
+        if ($filters->isSortiesPassees()){
+            $qb->andWhere('s.dateHeureDebut >= :now')
+                ->setParameter('now', $now->format('Y-m-d'));
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //    /**
     //     * @return Sortie[] Returns an array of Sortie objects

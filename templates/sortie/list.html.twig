@@ -1,11 +1,56 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="text-2xl font-bold mb-4">
-        Afficher une sortie
-    </h1>
+    <h1>Filtrer les sorties</h1>
+    {{ form_start(formSearchFilter) }}
+    <div class="row g-3">
 
-    <!-- Conteneur avec hauteur max et scroll vertical -->
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.campus) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.sortieNom) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.premiereDate) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.derniereDate) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.sortiesOrganisees) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.sortiesInscrites) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.sortiesNonInscrites) }}
+        </div>
+
+        <div class="col-md-4">
+            {{ form_row(formSearchFilter.sortiesPassees) }}
+        </div>
+
+        <div class="col-md-4 d-flex align-items-end">
+            {{ form_row(formSearchFilter.rechercher) }}
+        </div>
+
+        <div class="col-md-4 d-flex align-items-end">
+            {{ form_row(formSearchFilter.reinitialiser) }}
+        </div>
+
+
+    </div>
+    {{ form_end(formSearchFilter) }}
+
+
+
     <div class="max-h-80 overflow-y-auto border border-gray-300 rounded-lg">
         <table class="min-w-full border-collapse border border-gray-400 bg-white">
             <thead class="bg-gray-200 sticky top-0">
@@ -37,20 +82,31 @@
 
 
                     <td class="border border-gray-400 px-4 py-2 text-center">
-                            {% if app.user in sortie.participants %}
-                                X
+                        {% if app.user in sortie.participants %}
+                            X
+                        {% endif %}
+                    </td>
+
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.organisateur.nom }}
+                    </td>
+
+                    <td class="border border-gray-400 px-4 py-2">
+                        {% if sortie.etat.libelle == 'Créée' %}
+                            <a href="">Modifier</a> - <a href="">Publier</a>
+                        {% endif %}
+
+                        {% if app.user in sortie.participants %}
+                            <a href="">Afficher</a> -
+                            <a href="">Se désister</a>
+                        {% else %}
+                            <a href="">Afficher</a> -
+                            {% if not app.user %}
+                                <a href="">Se connecter</a>
                             {% endif %}
+                        {% endif %}
                     </td>
 
 
-                    <td class="border border-gray-400 px-4 py-2">{{ sortie.organisateur.nom }}</td>
-                    {#                <td class="border border-gray-400 px-4 py-2">{{ sortie.action }}</td> #}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="8" class="px-4 py-2 text-center text-gray-500">
-                        Aucune sortie trouvée
-                    </td>
                 </tr>
             {% endfor %}
             </tbody>

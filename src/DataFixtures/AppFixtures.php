@@ -123,7 +123,8 @@ class AppFixtures extends Fixture
                 ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etats))
                 ->setLieu($faker->randomElement($lieux))
-                ->addParticipant($faker->randomElement($participants));
+                ->addParticipant($faker->randomElement($participants))
+                ->setOrganisateur($faker->randomElement($participants));
 
 
             $manager->persist($sortie);
