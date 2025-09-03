@@ -33,10 +33,7 @@ class AppFixtures extends Fixture
 
     public function addData(ObjectManager $manager)
     {
-
-
         $faker = Factory::create('fr_FR');
-
 
         //Etat
         $tabEtats = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Activité terminée', 'Activité archivée', 'Annulée'];
