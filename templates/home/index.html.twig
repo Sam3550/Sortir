@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur Sortir.com !{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mt-5">Sortir.com</h1>
+            <p class="lead">La plateforme pour organiser et participer à des sorties entre amis.</p>
+            <p>Le site est actuellement en construction, mais vous pouvez nous laisser votre adresse e-mail pour être prévenu(e) de l'ouverture.</p>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <form method="post">
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Votre adresse e-mail" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Me tenir au courant</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
