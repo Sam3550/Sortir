@@ -6,9 +6,10 @@ use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,6 +36,12 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
 
     #[ORM\Column]
     private ?bool $organisateur = false;
+
+    #[ORM\Column]
+    private array $roles = [];
+
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function getOrganisateur(): ?bool
     {
@@ -213,6 +220,45 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
 
     public function getPassword(): ?string
     {
-        // TODO: Implement getPassword() method.
+        return $this->motPasse;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->mail;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 }
