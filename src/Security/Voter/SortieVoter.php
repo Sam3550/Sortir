@@ -4,7 +4,6 @@ namespace App\Security\Voter;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
-use Symfony\Component\Finder\Iterator\SortableIterator;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -41,7 +40,6 @@ final class SortieVoter extends Voter
          */
 
 
-
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::AFFICHER:
@@ -68,38 +66,59 @@ final class SortieVoter extends Voter
 
         return false;
     }
+
     private function afficher(Sortie $sortie, UserInterface $participant): bool
     {
         if ($sortie->getEtat()->getLibelle() !== Etat::CREEE || $participant === $sortie->getOrganisateur()) {
             return true;
         }
-            return false;
+        return false;
 
     }
 
 
-    private function desister(mixed $subject, UserInterface $participant, Sortie $sortie): bool
+    private function desister(Sortie $sortie, UserInterface $participant): bool
     {
-        return $sortie->getParticipants()->contains($participant);
+        if ($sortie->getParticipants()->contains($participant)) {
+            return true; // peut se désister
+        } else {
+            return false; // pas participant → pas de désistement possible
+        }
     }
 
-    private function inscrire(mixed $subject, UserInterface $participant, Sortie $sortie): bool
+    private function inscrire(Sortie $sortie, UserInterface $participant): bool
     {
-        return !$sortie->getParticipants()->contains($participant);
+        if (!$sortie->getParticipants()->contains($participant) && $sortie->getEtat()->getLibelle() !== Etat::CREEE) {
+            return true; // peut s'inscrire
+        } else {
+            return false; // déjà participant → interdit
+        }
     }
 
-    private function modifier(mixed $subject, UserInterface $participant): bool
+    private function modifier(Sortie $sortie, UserInterface $participant): bool
     {
-        return $participant === $subject->getUser();
+        if ($sortie->getEtat()->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
+            return true; // peut modifer
+        } else {
+            return false; // pas possible de modifier
+        }
     }
 
-    private function publier(mixed $subject, UserInterface $participant): bool
+    private function publier(Sortie $sortie, UserInterface $participant): bool
     {
-        return $participant === $subject->getUser();
+        if ($sortie->getEtat()->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
+            return true; // peut publier
+        } else {
+            return false; // peut pas publier
+        }
     }
 
-    private function annuler(mixed $subject, UserInterface $participant): bool
+    private function annuler(Sortie $sortie, UserInterface $participant): bool
     {
-        return $participant === $subject->getUser();
+        if ($sortie->getEtat()->getLibelle() === Etat::OUVERTE and $participant === $sortie->getOrganisateur()) {
+            return true; // peut annuler
+        } else {
+            return false; // peut pas annuler
+        }
     }
 }

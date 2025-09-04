@@ -66,7 +66,7 @@ final class SortieController extends AbstractController
                 return $this->redirectToRoute('main_home');
             }
             //TODO décommenter le setOrganiateur quand connexion/deco okay
-            //$sortie->setOrganisateur($this->getUser());
+            $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
             $entityManager->flush();
 
