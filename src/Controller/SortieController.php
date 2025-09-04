@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Form\Models\SortieSearch;
+
+use App\Form\SortieFilterSearchType;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AddSortieFormType;
@@ -16,14 +19,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
 {
-    #[Route('/list/{id}', name: 'list')]
-    public function list(SortieRepository $sortieRepository, int $idList): Response
-    {
-        $sortie = $sortieRepository->find($idList);
-        dump($sortie);
 
-        return $this->render('sortie/afficher.html.twig',[
-            'sortie' => $sortie,
+    #[Route('/list', name: 'list')]
+    public function list(SortieRepository $sortieRepository, Request $request): Response
+    {
+        $sortieSearch = new SortieSearch();
+        $searchSortieForm = $this->createForm(SortieFilterSearchType::class, $sortieSearch);
+        $searchSortieForm->handleRequest($request);
+
+        if ($searchSortieForm->isSubmitted() && $searchSortieForm->isValid()) {
+            $sorties = $sortieRepository->findByFilters($sortieSearch,$this->getUser() );
+
+        }else{
+            $sorties = $sortieRepository->findAll();
+        }
+
+        dump($sorties);
+        return $this->render('sortie/list.html.twig', [
+            'sorties' => $sorties,
+            'formSearchFilter' => $searchSortieForm->createView(),
         ]);
     }
 
@@ -53,7 +67,7 @@ final class SortieController extends AbstractController
                 return $this->redirectToRoute('main_home');
             }
             //TODO décommenter le setOrganiateur quand connexion/deco okay
-            //$sortie->setOrganisateur($this->getUser());
+            $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
             $entityManager->flush();
 
