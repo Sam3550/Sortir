@@ -9,9 +9,11 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
-
+// Fais par Samir
 class SortieRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sortie::class);
@@ -47,27 +49,29 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateFin', $filters->getDerniereDate()->format('Y-m-d'));
         }
 
-//        if ($filters->isSortiesOrganisees()){
-//            $qb->andWhere('s.organisateur = :user')
-//                ->setParameter('user', $user );
-//        }
-//
-//        if ($filters->isSortiesInscrites()){
-//            $qb->join('s.participants', 'i_inscrit')
-//                ->andWhere('i_inscrit.participant = :user')
-//                ->setParameter('user', $user);
-//        }
-//
-//        if ($filters->isSortiesNonInscrites()){
-//            $qb->join('s.participants', 'i_non_inscrit')
-//                ->andWhere('i_non_inscrit.participant != :user')
-//                ->setParameter('user', $user);
-//        }
-
-        if ($filters->isSortiesPassees()){
-            $qb->andWhere('s.dateHeureDebut >= :now')
-                ->setParameter('now', $now->format('Y-m-d'));
+        if ($filters->isSortiesOrganisees()){
+            $qb->andWhere('s.organisateur = :user')
+                ->setParameter('user', $user );
         }
+
+        if ($filters->isSortiesInscrites()) {
+            $qb->join('s.participants', 'p_inscrit')
+                ->andWhere('p_inscrit = :user')
+                ->setParameter('user', $user);
+        }
+
+        if ($filters->isSortiesNonInscrites()) {
+            $qb->leftJoin('s.participants', 'p_non_inscrit')
+                ->andWhere(':user NOT MEMBER OF s.participants')
+                ->setParameter('user', $user);
+        }
+
+        if ($filters->isSortiesPassees()) {
+            $qb->join('s.etat', 'e');
+            $qb->andWhere('e.libelle = :libelle')
+                ->setParameter('libelle', 'Activité terminée');
+        }
+
 
     }
 

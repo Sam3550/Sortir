@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
 {
+
     #[Route('/list', name: 'list')]
     public function list(SortieRepository $sortieRepository, Request $request): Response
     {

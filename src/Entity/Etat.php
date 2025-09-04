@@ -22,7 +22,7 @@ class Etat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length:30)]
     private ?string $libelle = null;
 
     /**

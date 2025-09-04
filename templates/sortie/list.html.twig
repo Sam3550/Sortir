@@ -1,55 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Filtrer les sorties</h1>
+    <div class="flex justify-center my-6 text-4xl"><h1>Filtrer les sorties</h1></div>
     {{ form_start(formSearchFilter) }}
-    <div class="row g-3">
+    <div class="flex gap-4 w-auto my-10 ">
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(formSearchFilter.campus, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(formSearchFilter.campus, {'attr': {'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            </div>
 
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.campus) }}
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(formSearchFilter.sortieNom, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(formSearchFilter.sortieNom, {'attr': {'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            </div>
+
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(formSearchFilter.premiereDate, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(formSearchFilter.premiereDate, {'attr': {'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            </div>
+
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(formSearchFilter.derniereDate, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(formSearchFilter.derniereDate, {'attr': {'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            </div>
         </div>
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.sortiesOrganisees, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearchFilter.sortiesOrganisees, null, {'label_attr': {'class': 'text-base font-medium text-gray-700'}}) }}
+            </div>
 
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.sortieNom) }}
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.sortiesInscrites, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearchFilter.sortiesInscrites, null, {'label_attr': {'class': 'text-base font-medium text-gray-700'}}) }}
+            </div>
+
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.sortiesNonInscrites, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearchFilter.sortiesNonInscrites, null, {'label_attr': {'class': 'text-base font-medium text-gray-700'}}) }}
+            </div>
+
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.sortiesPassees, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearchFilter.sortiesPassees, null, {'label_attr': {'class': 'text-base font-medium text-gray-700'}}) }}
+            </div>
         </div>
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.rechercher, {'attr': {'class': 'w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            </div>
 
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.premiereDate) }}
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_widget(formSearchFilter.reinitialiser, {'attr': {'class': 'w-full px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500'}}) }}
+            </div>
         </div>
-
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.derniereDate) }}
-        </div>
-
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.sortiesOrganisees) }}
-        </div>
-
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.sortiesInscrites) }}
-        </div>
-
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.sortiesNonInscrites) }}
-        </div>
-
-        <div class="col-md-4">
-            {{ form_row(formSearchFilter.sortiesPassees) }}
-        </div>
-
-        <div class="col-md-4 d-flex align-items-end">
-            {{ form_row(formSearchFilter.rechercher) }}
-        </div>
-
-        <div class="col-md-4 d-flex align-items-end">
-            {{ form_row(formSearchFilter.reinitialiser) }}
-        </div>
-
-
     </div>
-    {{ form_end(formSearchFilter) }}
-
-
 
     <div class="max-h-80 overflow-y-auto border border-gray-300 rounded-lg">
         <table class="min-w-full border-collapse border border-gray-400 bg-white">
@@ -68,60 +74,56 @@
             <tbody>
             {% for sortie in sorties %}
                 <tr class="odd:bg-gray-50 hover:bg-gray-100">
-                    <td class="border border-gray-400 px-4 py-2">{{ sortie.nom ? sortie.nom :'pas de nom' }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.nom ? sortie.nom : 'Pas de nom' }}</td>
                     <td class="border border-gray-400 px-4 py-2">
-                        {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : 'pas de date' }}
+                        {{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('d/m/Y H:i') : 'Pas de date' }}
                     </td>
                     <td class="border border-gray-400 px-4 py-2">
-                        {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y') : 'pas de date' }}
+                        {{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y') : 'Pas de date' }}
                     </td>
-
-                    <td class="border border-gray-400 px-4 py-2">{{ sortie.participants|length }}
-                        /{{ sortie.nbInscriptionMax }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
                     <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle }}</td>
-
-
                     <td class="border border-gray-400 px-4 py-2 text-center">
                         {% if app.user in sortie.participants %}
-                            X
-                        {% endif %}
-                    </td>
-
-                    <td class="border border-gray-400 px-4 py-2">
-                        {% if sortie.organisateur %}
-                            {{ sortie.organisateur.nom }}
+                            <span class="text-green-500 font-bold">✓</span>
                         {% else %}
-                            Inconnu
+                            <span class="text-red-400">x</span>
                         {% endif %}
-
                     </td>
-
                     <td class="border border-gray-400 px-4 py-2">
-                        {% if is_granted('SORTIE_AFFICHER', sortie) %}
-                            <a href="">Afficher</a>
-
-                        {% endif %}
-                        {% if is_granted('SORTIE_DESISTER', sortie) %}
-                            <a href="">- Se désister</a>
-                        {% endif %}
-                        {% if is_granted('SORTIE_INSCRIRE', sortie) %}
-                            <a href="">- S'inscrire</a>
-                        {% endif %}
-                        {% if is_granted('SORTIE_MODIFIER', sortie) %}
-                            <a href="">Modifier</a>
-                        {% endif %}
-                        {% if is_granted('SORTIE_PUBLIER', sortie) %}
-                            <a href="">- Publier</a>
-                        {% endif %}
-                        {% if is_granted('SORTIE_ANNULER', sortie) %}
-                            <a href="">- Annuler</a>
-                        {% endif %}
+                        {{ sortie.organisateur ? sortie.organisateur.nom : 'Inconnu' }}
                     </td>
-
-
+                    <td class="border border-gray-400 px-4 py-2">
+                        <div class="flex flex-wrap gap-2">
+                            {% if is_granted('SORTIE_AFFICHER', sortie) %}
+                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
+                            {% endif %}
+                            {% if is_granted('SORTIE_DESISTER', sortie) %}
+                                <a href="#" class="text-red-600 hover:text-red-800 underline">Se désister</a>
+                            {% endif %}
+                            {% if is_granted('SORTIE_INSCRIRE', sortie) %}
+                                <a href="#" class="text-green-600 hover:text-green-800 underline">S'inscrire</a>
+                            {% endif %}
+                            {% if is_granted('SORTIE_MODIFIER', sortie) %}
+                                <a href="#" class="text-yellow-600 hover:text-yellow-800 underline">Modifier</a>
+                            {% endif %}
+                            {% if is_granted('SORTIE_PUBLIER', sortie) %}
+                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Publier</a>
+                            {% endif %}
+                            {% if is_granted('SORTIE_ANNULER', sortie) %}
+                                <a href="#" class="text-red-600 hover:text-red-800 underline">Annuler</a>
+                            {% endif %}
+                        </div>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+
+    <div class="flex justify-center mt-6">
+        {{ form_widget(formSearchFilter.creer) }}
+    </div>
+
+    {{ form_end(formSearchFilter) }}
 {% endblock %}

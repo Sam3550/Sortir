@@ -1,3 +1,9 @@
 body {
-
+    background-color: #f2f4fa;
+}
+.container {
+    box-sizing: content-box;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
 }
