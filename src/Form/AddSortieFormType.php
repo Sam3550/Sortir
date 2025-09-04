@@ -24,7 +24,7 @@ class AddSortieFormType extends AbstractType
     {
         $builder
             ->add('nom', null, [
-                'label' => 'Nom :',
+                'label' => 'Nom de la sortie :',
                 'attr' => [
                     'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
                                 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
@@ -32,7 +32,7 @@ class AddSortieFormType extends AbstractType
                 ]
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
-                'label' => 'Date de la sortie :',
+                'label' => 'Date & heure de la sortie :',
                 'widget' => 'single_text',
                 'html5' => true,
                 'attr' => [
@@ -61,7 +61,7 @@ class AddSortieFormType extends AbstractType
                 ]
             ])
             ->add('duree', null, [
-                'label' => 'Durée :',
+                'label' => 'Durée de la sortie :',
                 'attr' => [
                     'class' => 'block w-24 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
                                 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
@@ -76,8 +76,19 @@ class AddSortieFormType extends AbstractType
                                 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
                 ]
             ])
+            ->add('ville', EntityType::class, [
+                'label' => 'Ville de la sortie :',
+                'class' => Ville::class,
+                'mapped' => false,
+                'choice_label' => 'nom',
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])
             ->add('lieu', EntityType::class, [
-                'label' => 'Lieu :',
+                'label' => 'Lieu de la sortie :',
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
                 'attr' => [
@@ -86,6 +97,26 @@ class AddSortieFormType extends AbstractType
                                 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
                 ]
             ])
+            /*->add('latitude', EntityType::class, [
+                'label' => 'Latitude :',
+                'class' => Lieu::class,
+                'choice_label' => 'latitude',
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])
+            ->add('longitude', EntityType::class, [
+                'label' => 'Longitude :',
+                'class' => Lieu::class,
+                'choice_label' => 'longitude',
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])*/
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

@@ -32,6 +32,10 @@
         </div>
         <div class="w-full">
             <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.ville, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.ville) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
                 {{ form_label(addSortieForm.lieu, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
                 {{ form_widget(addSortieForm.lieu) }}
             </div>

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex justify-center my-6 text-4xl"><h1>Consulter la sortie {{ sortie.nom }}</h1></div>
+    <div class="flex gap-4 w-auto mt-15">
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Nom de la sortie :</b> {{ sortie.nom }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Date & heure de la sortie :</b> {{ sortie.dateHeureDebut | date("Y-m-d H:i") }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Date limite d'inscription :</b> {{ sortie.dateLimiteInscription | date("Y-m-d") }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Nombre de places :</b> {{ sortie.nbInscriptionMax }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Durée de la sortie :</b> {{ sortie.duree }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p>Infos sortie :</b> {{ sortie.infosSortie }}</p>
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Ville de la sortie :</b> {{ sortie.lieu.ville.nom }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Lieu de la sortie :</b> {{ sortie.lieu.nom }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Rue :</b> {{ sortie.lieu.rue }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Code postal :</b> {{ sortie.lieu.ville.codePostal }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Lieu de la sortie :</b> {{ sortie.lieu.latitude }}</p>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                <p><b>Lieu de la sortie :</b> {{ sortie.lieu.longitude }}</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2><b>Liste des participants inscrits :</b></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for participant in sortie.participants %}
+                <tr>
+                    <td>{{ participant.id}}</td>
+                    <td>{{ participant.nom }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {#<div class="flex justify-center gap-4 mt-4">
+        {{ form_widget(addSortieForm.enregistrer) }}
+        {{ form_widget(addSortieForm.publier) }}
+        {{ form_widget(addSortieForm.annuler) }}
+    </div>#}
+
+{% endblock %}

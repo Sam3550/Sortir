@@ -52,8 +52,7 @@ final class SortieController extends AbstractController
             if($addSortieForm->get('annuler')->isClicked()) {
                 return $this->redirectToRoute('main_home');
             }
-            //TODO décommenter le setOrganiateur quand connexion/deco okay
-            //$sortie->setOrganisateur($this->getUser());
+            $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -65,4 +64,21 @@ final class SortieController extends AbstractController
             'addSortieForm' => $addSortieForm
         ]);
     }
+
+    #[Route('/detailSortie/{id}', name: 'detailSortie', requirements: ['id' => '\d+'])]
+    public function detailSortie(int $id, SortieRepository $sortieRepository): Response{
+        $sortie = $sortieRepository->find($id);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException("Oops ! Cette sortie n'existe pas !");
+        }
+
+        //TODO afficher le détail d'une sortie
+        return $this->render('sortie/detailSortie.html.twig', [
+            'sortie' => $sortie
+        ]);
+
+
+    }
+
 }
