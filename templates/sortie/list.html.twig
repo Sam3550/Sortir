@@ -91,18 +91,8 @@
                     </td>
 
                     <td class="border border-gray-400 px-4 py-2">
-                        {% if sortie.etat.libelle == 'Créée' %}
-                            <a href="">Modifier</a> - <a href="">Publier</a>
-                        {% endif %}
-
-                        {% if app.user in sortie.participants %}
-                            <a href="">Afficher</a> -
-                            <a href="">Se désister</a>
-                        {% else %}
-                            <a href="">Afficher</a> -
-                            {% if not app.user %}
-                                <a href="">Se connecter</a>
-                            {% endif %}
+                        {% if is_granted('SORTIE_AFFICHER', sortie) %}
+                            <a href="">Afficher</a>
                         {% endif %}
                     </td>
 
