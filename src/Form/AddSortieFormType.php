@@ -23,40 +23,86 @@ class AddSortieFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('dateHeureDebut', DateTimeType::class, [
-                'label' => 'Date de la sortie',
-                'widget' => 'single_text',
-                'html5' => true,
-            ])
-            ->add('dateLimiteInscription', DateType::class, [
-                'label' => 'Date limite d\'inscription',
-                'widget' => 'single_text',
-            ])
-            ->add('nbInscriptionMax', IntegerType::class, [
-                'label' => 'Nombre de places',
+            ->add('nom', null, [
+                'label' => 'Nom :',
                 'attr' => [
-                    'min' => 1,
-                    'max' => 20
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
                 ]
             ])
-            ->add('duree')
+            ->add('dateHeureDebut', DateTimeType::class, [
+                'label' => 'Date de la sortie :',
+                'widget' => 'single_text',
+                'html5' => true,
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])
+            ->add('dateLimiteInscription', DateType::class, [
+                'label' => 'Date limite d\'inscription :',
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])
+            ->add('nbInscriptionMax', IntegerType::class, [
+                'label' => 'Nombre de places :',
+                'attr' => [
+                    'min' => 1,
+                    'max' => 20,
+                    'class' => 'block w-24 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ])
+            ->add('duree', null, [
+                'label' => 'Durée :',
+                'attr' => [
+                    'class' => 'block w-24 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
+            ] )
             ->add('infosSortie', TextareaType::class, [
-                'label' => 'Infos sortie',
+                'label' => 'Infos sortie :',
+                'attr' => [
+                    'class' => 'block w-96 h-28 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
             ])
             ->add('lieu', EntityType::class, [
-                'label' => 'Lieu',
+                'label' => 'Lieu :',
                 'class' => Lieu::class,
                 'choice_label' => 'nom',
+                'attr' => [
+                    'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
+                                -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
+                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
+                ]
             ])
             ->add('enregistrer', SubmitType::class, [
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer',
+                'attr' => [
+                    'class' => 'w-32 h-15 bg-indigo-200/75 hover:bg-indigo-300/50 rounded-md'
+                ]
             ])
             ->add('publier', SubmitType::class, [
-                'label' => 'Publier la sortie'
+                'label' => 'Publier la sortie',
+                'attr' => [
+                    'class' => 'w-40 h-15 bg-emerald-300/75 hover:bg-emerald-400/50 rounded-md'
+                ]
             ])
             ->add('annuler', SubmitType::class, [
-                'label' => 'Annuler'
+                'label' => 'Annuler',
+                'attr' => [
+                    'class' => 'w-32 h-15 bg-slate-300/75 hover:bg-slate-400/50 rounded-md'
+                ]
             ])
 
         ;
