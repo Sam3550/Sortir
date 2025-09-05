@@ -28,11 +28,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $this->addData($manager);
-    }
-
-    public function addData(ObjectManager $manager)
-    {
         $faker = Factory::create('fr_FR');
 
         //Etat
@@ -88,7 +83,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $participant = new Participant();
 
-            $thePassword = $faker->password();
+            
             $hashedPassword = $this->passwordHasher->hashPassword($participant, "1234");
 
             $participant
@@ -120,7 +115,8 @@ class AppFixtures extends Fixture
                 ->setCampus($faker->randomElement($campusList))
                 ->setEtat($faker->randomElement($etats))
                 ->setLieu($faker->randomElement($lieux))
-                ->addParticipant($faker->randomElement($participants));
+                ->addParticipant($faker->randomElement($participants))
+                ->setOrganisateur($faker->randomElement($participants));
 
 
             $manager->persist($sortie);

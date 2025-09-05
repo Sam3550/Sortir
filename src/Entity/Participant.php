@@ -71,6 +71,7 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
 
     public function __construct()
     {
+        $this->roles = [];
         $this->sorties = new ArrayCollection();
         $this->sorties_orga = new ArrayCollection();
     }
@@ -133,9 +134,16 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
         return $this->motPasse;
     }
 
-    public function setMotPasse(string $motPasse): static
+    public function setMotPasse(?string $motPasse): static
     {
         $this->motPasse = $motPasse;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->motPasse = $password;
 
         return $this;
     }
@@ -160,18 +168,18 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
         return $this->sorties;
     }
 
-    public function addSorty(Sortie $sorty): static
+    public function addSortie(Sortie $sortie): static
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties->add($sorty);
+        if (!$this->sorties->contains($sortie)) {
+            $this->sorties->add($sortie);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): static
+    public function removeSortie(Sortie $sortie): static
     {
-        $this->sorties->removeElement($sorty);
+        $this->sorties->removeElement($sortie);
 
         return $this;
     }
@@ -225,8 +233,8 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
 
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        $roles = $this->roles ?? [];
+        // garantit que chaque utilisateur a au moins le rôle ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);

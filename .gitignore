@@ -1,6 +1,9 @@
-
+bun.lock
+/node_modules/
+phpstan.neon
 ###> symfony/framework-bundle ###
-/.idea
+.idea/
+.idea/php.xml
 /.env.local
 /.env.local.php
 /.env.*.local

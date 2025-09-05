@@ -16,14 +16,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
 {
-    #[Route('/list/{id}', name: 'list')]
-    public function list(SortieRepository $sortieRepository, int $idList): Response
-    {
-        $sortie = $sortieRepository->find($idList);
-        dump($sortie);
 
-        return $this->render('sortie/afficher.html.twig',[
-            'sortie' => $sortie,
+    #[Route('/list', name: 'list')]
+    public function list(SortieRepository $sortieRepository, Request $request): Response
+    {
+        $sortieSearch = new SortieSearch();
+        $searchSortieForm = $this->createForm(SortieFilterSearchType::class, $sortieSearch);
+        $searchSortieForm->handleRequest($request);
+
+        if ($searchSortieForm->isSubmitted() && $searchSortieForm->isValid()) {
+            $sorties = $sortieRepository->findByFilters($sortieSearch,$this->getUser() );
+
+        }else{
+            $sorties = $sortieRepository->findAll();
+        }
+
+        dump($sorties);
+        return $this->render('sortie/list.html.twig', [
+            'sorties' => $sorties,
+            'formSearchFilter' => $searchSortieForm->createView(),
         ]);
     }
 
