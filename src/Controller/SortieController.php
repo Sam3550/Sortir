@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AddSortieFormType;
+use App\Form\Models\SortieSearch;
+use App\Form\SortieFilterSearchType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
