@@ -36,6 +36,7 @@ class AddSortieFormType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 'attr' => [
+                    'id'=> 'dateHeureDebut',
                     'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
                                 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
                                 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
@@ -45,6 +46,7 @@ class AddSortieFormType extends AbstractType
                 'label' => 'Date limite d\'inscription :',
                 'widget' => 'single_text',
                 'attr' => [
+                    'id'=> 'dateLimiteInscription',
                     'class' => 'block w-48 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
                                 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 
                                 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'
@@ -61,7 +63,7 @@ class AddSortieFormType extends AbstractType
                 ]
             ])
             ->add('duree', null, [
-                'label' => 'Durée de la sortie :',
+                'label' => 'Durée (en minutes) :',
                 'attr' => [
                     'class' => 'block w-24 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 
                                 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 

@@ -17,10 +17,10 @@
                 <p><b>Nombre de places :</b> {{ sortie.nbInscriptionMax }}</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
-                <p><b>Durée de la sortie :</b> {{ sortie.duree }}</p>
+                <p><b>Durée de la sortie :</b> {{ sortie.duree }} minutes</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
-                <p>Infos sortie :</b> {{ sortie.infosSortie }}</p>
+                <p class="text-justify"><b>Infos sortie :</b> {{ sortie.infosSortie }}</p>
             </div>
         </div>
         <div class="w-full">
@@ -44,20 +44,21 @@
             </div>
         </div>
     </div>
-    <div>
+    <div class="mx-4">
         <h2><b>Liste des participants inscrits :</b></h2>
-        <table>
-            <thead>
+        <table class="border-1 border-slate-400 mt-2">
+            <thead class="border-1 border-slate-400">
                 <tr>
-                    <th>Pseudo</th>
-                    <th>Nom</th>
+                    <th class="px-2 border-1 border-slate-400">Pseudo</th>
+                    <th class="px-2 border-1 border-slate-400">Nom Prénom</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="border-1 border-slate-400">
             {% for participant in sortie.participants %}
+                {# TODO mettre participant.pseudo à la place de participant.id #}
                 <tr>
-                    <td>{{ participant.id}}</td>
-                    <td>{{ participant.nom }}</td>
+                    <td class="px-2 border-1 border-slate-400">{{ participant.id}}</td>
+                    <td class="px-2 border-1 border-slate-400">{{ participant.nom }} {{ participant.prenom }}</td>
                 </tr>
             {% endfor %}
             </tbody>
