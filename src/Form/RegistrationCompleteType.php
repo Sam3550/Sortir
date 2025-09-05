@@ -2,16 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Campus;
-use App\Entity\Participant;
+use App\Dto\RegistrationFormDto;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationCompleteType extends AbstractType
 {
@@ -31,10 +28,6 @@ class RegistrationCompleteType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmer le mot de passe'],
                 'invalid_message' => 'Les mots de passe doivent correspondre.',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 6]),
-                ],
             ])
         ;
     }
@@ -42,7 +35,7 @@ class RegistrationCompleteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Participant::class,
+            'data_class' => RegistrationFormDto::class,
         ]);
     }
 }

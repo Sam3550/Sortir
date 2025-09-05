@@ -27,7 +27,7 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your profile has been updated.');
+            $this->addFlash('success', 'Votre profil a bien été mis à jour.');
 
             return $this->redirectToRoute('app_profile');
         }

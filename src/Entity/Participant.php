@@ -134,7 +134,7 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
         return $this->motPasse;
     }
 
-    public function setMotPasse(string $motPasse): static
+    public function setMotPasse(?string $motPasse): static
     {
         $this->motPasse = $motPasse;
 
@@ -234,7 +234,7 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
     public function getRoles(): array
     {
         $roles = $this->roles ?? [];
-        // guarantee every user at least has ROLE_USER
+        // garantit que chaque utilisateur a au moins le rôle ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);

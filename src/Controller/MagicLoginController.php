@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Dto\RegistrationFormDto;
 use App\Entity\Participant;
 use App\Form\EmailCheckType;
 use App\Form\PasswordLoginType;
@@ -29,7 +30,7 @@ class MagicLoginController extends AbstractController
     }
 
     #[Route('/', name: 'app_magic_login')]
-    public function index(Request $request, ParticipantRepository $participantRepository): Response
+    public function index(Request $request, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_profile');
@@ -47,9 +48,17 @@ class MagicLoginController extends AbstractController
             if ($participant) {
                 return $this->redirectToRoute('app_magic_login_password', ['email' => $email]);
             } else {
-                // User does not exist, send magic link for registration.
+                // User does not exist, persist them and send magic link for registration.
                 $user = new Participant();
                 $user->setMail($email);
+                $user->setNom($email);
+                $user->setPrenom('À compléter');
+                $user->setActif(false);
+                $user->setRoles([]);
+                $user->setMotPasse(uniqid());
+
+                $entityManager->persist($user);
+                $entityManager->flush();
 
                 $this->emailVerifier->sendEmailConfirmation('app_magic_register_complete', $user,
                     (new TemplatedEmail())
@@ -100,9 +109,19 @@ class MagicLoginController extends AbstractController
     }
 
     #[Route('/register-complete', name: 'app_magic_register_complete')]
-    public function registerComplete(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, Security $security): Response
+    public function registerComplete(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, Security $security, ParticipantRepository $participantRepository): Response
     {
-        $user = new Participant();
+        $id = $request->query->get('id');
+
+        if (null === $id) {
+            return $this->redirectToRoute('app_magic_login');
+        }
+
+        $user = $participantRepository->find($id);
+
+        if (null === $user) {
+            return $this->redirectToRoute('app_magic_login');
+        }
 
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
@@ -111,15 +130,25 @@ class MagicLoginController extends AbstractController
             return $this->redirectToRoute('app_magic_login');
         }
 
-        $form = $this->createForm(RegistrationCompleteType::class, $user);
+        $dto = new RegistrationFormDto();
+        $form = $this->createForm(RegistrationCompleteType::class, $dto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plainPassword = $form->get('plainPassword')->getData();
-            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+            $user->setNom($dto->nom);
+            $user->setPrenom($dto->prenom);
+            $user->setTelephone($dto->telephone);
+            $user->setCampus($dto->campus);
             $user->setActif(true);
 
-            $entityManager->persist($user);
+            $plainPassword = $form->get('plainPassword')->getData();
+            $user->setMotPasse(
+                $passwordHasher->hashPassword(
+                    $user,
+                    $plainPassword
+                )
+            );
+
             $entityManager->flush();
 
             return $security->login($user, 'form_login', 'main');
