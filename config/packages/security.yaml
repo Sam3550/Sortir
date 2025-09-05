@@ -20,32 +20,19 @@ security:
               secret: '%kernel.secret%'
               lifetime: 31536000
             form_login:
-                login_path: app_login
-                check_path: app_login
+                login_path: app_magic_login
                 default_target_path: app_home
                 enable_csrf: true
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
-                # 1 month in seconds
-                # by default, the feature is enabled by checking a
-                # checkbox in the login form (see below), uncomment the
-              # following line to always enable it.
-              #always_remember_me: true
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+                target: app_magic_login
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/home, roles: ROLE_USER }
-        - { path: ^/profile, roles: ROLE_USER }
+        # The login flow paths must be public
+        - { path: ^/login-password, roles: PUBLIC_ACCESS }
+        - { path: ^/register-complete, roles: PUBLIC_ACCESS }
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+        # All other paths require a logged-in user
+        - { path: ^/, roles: ROLE_USER }
 
 when@test:
     security:

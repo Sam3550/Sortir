@@ -14,12 +14,10 @@ final class HomeController extends AbstractController
     #[Route('/home', name: 'home')]
     public function home(Request $request): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->redirectToRoute('app_magic_login');
     }
 
-    #[Route('/profile', name: 'app_profile')]
+    #[Route('/profil', name: 'app_profile')]
     public function profile(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -29,7 +27,7 @@ final class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your profile has been updated.');
+            $this->addFlash('success', 'Votre profil a bien été mis à jour.');
 
             return $this->redirectToRoute('app_profile');
         }
