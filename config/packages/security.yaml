@@ -21,7 +21,7 @@ security:
               lifetime: 31536000
             form_login:
                 login_path: app_magic_login
-                default_target_path: app_home
+                default_target_path: /sortie
                 enable_csrf: true
             logout:
                 path: app_logout

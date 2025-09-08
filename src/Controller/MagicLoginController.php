@@ -33,7 +33,7 @@ class MagicLoginController extends AbstractController
     public function index(Request $request, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('sortie_list');
         }
 
         $form = $this->createForm(EmailCheckType::class);

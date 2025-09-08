@@ -96,22 +96,25 @@
                     <td class="border border-gray-400 px-4 py-2">
                         <div class="flex flex-wrap gap-2">
                             {% if is_granted('SORTIE_AFFICHER', sortie) %}
-                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
+                                <a href="{{ path('sortie_show', {'id': sortie.id}) }}" class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
                             {% endif %}
                             {% if is_granted('SORTIE_DESISTER', sortie) %}
-                                <a href="#" class="text-red-600 hover:text-red-800 underline">Se désister</a>
+                                {{ include('sortie/_desister_form.html.twig') }}
                             {% endif %}
                             {% if is_granted('SORTIE_INSCRIRE', sortie) %}
-                                <a href="#" class="text-green-600 hover:text-green-800 underline">S'inscrire</a>
+                                {{ include('sortie/_inscrire_form.html.twig') }}
                             {% endif %}
                             {% if is_granted('SORTIE_MODIFIER', sortie) %}
-                                <a href="#" class="text-yellow-600 hover:text-yellow-800 underline">Modifier</a>
+                                <a href="{{ path('sortie_edit', {'id': sortie.id}) }}" class="text-yellow-600 hover:text-yellow-800 underline">Modifier</a>
                             {% endif %}
                             {% if is_granted('SORTIE_PUBLIER', sortie) %}
-                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Publier</a>
+                                {{ include('sortie/_publier_form.html.twig') }}
                             {% endif %}
                             {% if is_granted('SORTIE_ANNULER', sortie) %}
-                                <a href="#" class="text-red-600 hover:text-red-800 underline">Annuler</a>
+                                {{ include('sortie/_annuler_form.html.twig') }}
+                            {% endif %}
+                            {% if is_granted('SORTIE_SUPPRIMER', sortie) %}
+                                {{ include('sortie/_delete_form.html.twig') }}
                             {% endif %}
                         </div>
                     </td>
