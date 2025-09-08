@@ -17,6 +17,7 @@ class Etat
     public const ACTTERMINER = "Activité terminée" ;
     public const ACTARCHIVE = "Activité archivée" ;
     public const ANNULE = "Annulée" ;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

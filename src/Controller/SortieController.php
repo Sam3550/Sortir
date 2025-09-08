@@ -22,6 +22,7 @@ final class SortieController extends AbstractController
     #[Route('/list', name: 'list')]
     public function list(SortieRepository $sortieRepository, Request $request): Response
     {
+
         $sortieSearch = new SortieSearch();
         $searchSortieForm = $this->createForm(SortieFilterSearchType::class, $sortieSearch);
         $searchSortieForm->handleRequest($request);
@@ -31,6 +32,7 @@ final class SortieController extends AbstractController
 
         }else{
             $sorties = $sortieRepository->findAll();
+
         }
 
         dump($sorties);
