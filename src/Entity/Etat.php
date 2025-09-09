@@ -10,20 +10,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EtatRepository::class)]
 class Etat
 {
-    public const CREEE = "Créée" ;
-    public const OUVERTE = "Ouverte" ;
-    public const CLOTURE = "Clôturée" ;
-    public const ACTENCOURS = "Activité en cours" ;
-    public const ACTTERMINER = "Activité terminée" ;
-    public const ACTARCHIVE = "Activité archivée" ;
-    public const ANNULE = "Annulée" ;
+    public const CREEE = "Créée";
+    public const OUVERTE = "Ouverte";
+    public const CLOTURE = "Clôturée";
+    public const ACTENCOURS = "Activité en cours";
+    public const ACTTERMINER = "Activité terminée";
+    public const ACTARCHIVE = "Activité archivée";
+    public const ANNULE = "Annulée";
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length:30)]
+    #[ORM\Column(length: 30)]
     private ?string $libelle = null;
 
     /**

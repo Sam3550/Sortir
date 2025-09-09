@@ -30,7 +30,6 @@ final class InscritController extends AbstractController
 
         }
 
-        $sortie->getEtat()->setLibelle(Etat::OUVERTE);
 
 
 

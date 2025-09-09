@@ -72,8 +72,8 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('libelle', 'Activité terminée');
         }
 
-            $qb->join('s.etat', 'e');
-            $qb->andWhere('e.libelle != :libelle')
+            $qb->join('s.etat', 'stat');
+            $qb->andWhere('stat.libelle != :libelle')
                 ->setParameter('libelle', 'Activité archivée');
 
 
