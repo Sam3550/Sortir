@@ -62,7 +62,7 @@ class MagicLoginController extends AbstractController
 
                 $this->emailVerifier->sendEmailConfirmation('app_magic_register_complete', $user,
                     (new TemplatedEmail())
-                        ->from(new Address($this->getParameter('app.mail_sender'), 'Sortir.com'))
+                        ->from(new Address('contact@beaj.fr', 'Sortir.com'))
                         ->to($user->getMail())
                         ->subject('Finalisez votre inscription !')
                         ->htmlTemplate('registration/confirmation_email.html.twig')

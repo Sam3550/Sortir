@@ -19,16 +19,16 @@
                 <td>{{ campus.id }}</td>
                 <td>{{ campus.nom }}</td>
                 <td>
-                    <a href="{{ path('app_campus_edit', {'id': campus.id}) }}">édition</a>
+                    <a href="{{ path('app_campus_edit', {'id': campus.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Pas d'enregistrement trouvé</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_campus_new') }}">Nouveau campus</a>
+    <a href="{{ path('app_campus_new') }}">Create new</a>
 {% endblock %}

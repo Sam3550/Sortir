@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Repository\CampusRepository;
-use App\Repository\ParticipantRepository;
-use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,19 +63,11 @@ final class CampusController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'app_campus_delete', methods: ['POST'])]
-    public function delete(Request $request, Campus $campus, EntityManagerInterface $entityManager, SortieRepository $sortieRepository, ParticipantRepository $participantRepository): Response
+    public function delete(Request $request, Campus $campus, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$campus->getId(), $request->getPayload()->getString('_token'))) {
-            $sorties = $sortieRepository->findBy(['campus' => $campus]);
-            $participants = $participantRepository->findBy(['campus' => $campus]);
-
-            if (count($sorties) > 0 || count($participants) > 0) {
-                $this->addFlash('danger', 'Impossible de supprimer le campus car il est utilisé par des sorties ou des participants.');
-            } else {
-                $entityManager->remove($campus);
-                $entityManager->flush();
-                $this->addFlash('success', 'Le campus a été supprimé avec succès.');
-            }
+            $entityManager->remove($campus);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);

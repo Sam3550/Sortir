@@ -43,9 +43,6 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
     #[ORM\Column]
     private bool $isVerified = false;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $avatar = null;
-
     public function getOrganisateur(): ?bool
     {
         return $this->organisateur;
@@ -269,18 +266,6 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): static
-    {
-        $this->avatar = $avatar;
 
         return $this;
     }

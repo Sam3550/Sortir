@@ -21,16 +21,16 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">édition</a>
+                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">Pas d'enregistrement trouvé</td>
+                <td colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_ville_new') }}">Nouvelle ville</a>
+    <a href="{{ path('app_ville_new') }}">Create new</a>
 {% endblock %}
