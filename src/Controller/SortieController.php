@@ -72,15 +72,15 @@ final class SortieController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash("success", "Sortie : " . $sortie->getNom() . " ajoutée !");
-            //TODO mettre bon return
-            return $this->redirectToRoute('sortie_addSortie');
+
+            return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
         }
         return $this->render('sortie/ajouter_sortie.html.twig', [
             'addSortieForm' => $addSortieForm
         ]);
     }
 
-    #[Route('/detailSortie/{id}', name: 'detailSortie', requirements: ['id' => '\d+'])]
+    #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
     public function detailSortie(int $id, SortieRepository $sortieRepository): Response{
         $sortie = $sortieRepository->find($id);
 
@@ -98,7 +98,6 @@ final class SortieController extends AbstractController
     public function update(
         int $id,
         SortieRepository $sortieRepository,
-        EtatRepository $etatRepository,
         Request $request,
         EntityManagerInterface $entityManager): Response
     {
@@ -108,27 +107,29 @@ final class SortieController extends AbstractController
             throw $this->createNotFoundException("Cette sortie n'existe pas !");
         }
 
-        $sortieAnnulerForm = $this->createForm(DeleteSortieFormType::class, $sortie);
-        $sortieAnnulerForm->handleRequest($request);
+        $sortieMAJForm = $this->createForm(AddSortieFormType::class, $sortie);
+        $sortieMAJForm->handleRequest($request);
 
         //Attention : on annule une sortie mais on ne la supprime pas de la BDD, c'est un update d'état
         // + ajout du motif de l'annulation !
-        if($sortieAnnulerForm->isSubmitted() && $sortieAnnulerForm->isValid()) {
+        if($sortieMAJForm->isSubmitted() && $sortieMAJForm->isValid()) {
 
-            if($sortieAnnulerForm->get('annuler')->isClicked()) {
-                $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
-                $sortie->setEtat($etat);
+            if($sortieMAJForm->get('supprimer')->isClicked()) {
+                $entityManager->remove($sortie);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('sortie_list');
             }
 
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            return $this->redirectToRoute('sortie_detailSortie', ['id' => $sortie->getId()]);
+            return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
         }
 
-        return $this->render('sortie/annuler_sortie.html.twig', [
+        return $this->render('sortie/update_sortie.html.twig', [
             'sortie' => $sortie,
-            'sortieAnnulerForm' => $sortieAnnulerForm
+            'sortieMAJForm' => $sortieMAJForm
         ]);
     }
 

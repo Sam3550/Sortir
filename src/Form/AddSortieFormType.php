@@ -137,6 +137,12 @@ class AddSortieFormType extends AbstractType
                     'class' => 'w-32 h-15 bg-slate-300/75 hover:bg-slate-400/50 rounded-md'
                 ]
             ])
+            ->add('supprimer', SubmitType::class, [
+                'label' => 'Supprimer la sortie',
+                'attr' => [
+                    'class' => 'w-40 h-15 bg-rose-300/75 hover:bg-rose-400/50 rounded-md'
+                ]
+            ]);
 
         ;
     }
