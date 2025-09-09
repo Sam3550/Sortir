@@ -41,6 +41,7 @@ class SortieSearch
 
     public bool $sortiesPassees = false;
 
+
     // Getters
     public function getCampus(): ?string
     {
