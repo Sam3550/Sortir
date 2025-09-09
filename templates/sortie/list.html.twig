@@ -100,19 +100,25 @@
                     <td class="border border-gray-400 px-4 py-2">
                         <div class="flex flex-wrap gap-2">
                             {% if is_granted('SORTIE_AFFICHER', sortie) %}
-                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
+                                <a href="{{ path('sortie_detailSortie', {"id" : sortie.id}) }}"
+                                   class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
                             {% endif %}
+
+                            {% if is_granted('SORTIE_INSCRIRE', sortie)  %}
+                                <a href="{{ path('inscrit', {"id" : sortie.id}) }}"
+                                   class="text-green-600 hover:text-green-800 underline">S'inscrire</a>
+                            {% endif %}
+
                             {% if is_granted('SORTIE_DESISTER', sortie) %}
-                                <a href="#" class="text-red-600 hover:text-red-800 underline">Se désister</a>
+                                <a href="{{ path('desister', {"id" : sortie.id}) }}"
+                                   class="text-red-600 hover:text-red-800 underline">Se désister</a>
                             {% endif %}
-                            {% if is_granted('SORTIE_INSCRIRE', sortie) %}
-                                <a href="#" class="text-green-600 hover:text-green-800 underline">S'inscrire</a>
-                            {% endif %}
+
                             {% if is_granted('SORTIE_MODIFIER', sortie) %}
                                 <a href="#" class="text-yellow-600 hover:text-yellow-800 underline">Modifier</a>
                             {% endif %}
                             {% if is_granted('SORTIE_PUBLIER', sortie) %}
-                                <a href="#" class="text-blue-600 hover:text-blue-800 underline">Publier</a>
+                                <a href="{{ path('sortie_publier', {"id" : sortie.id}) }}" class="text-blue-600 hover:text-blue-800 underline">Publier</a>
                             {% endif %}
                             {% if is_granted('SORTIE_ANNULER', sortie) %}
                                 <a href="#" class="text-red-600 hover:text-red-800 underline">Annuler</a>
@@ -126,8 +132,11 @@
     </div>
 
     <div class="flex justify-center mt-6">
-        {{ form_widget(formSearchFilter.creer) }}
+        <a href="{{ path('sortie_addSortie') }}">
+            {{ form_widget(formSearchFilter.creer) }}
+        </a>
     </div>
+
 
     {{ form_end(formSearchFilter) }}
 {% endblock %}
