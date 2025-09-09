@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Form\Models\SortieSearch;
-
-use App\Form\SortieFilterSearchType;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AddSortieFormType;
+use App\Form\Models\SortieSearch;
+use App\Form\SortieFilterSearchType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,11 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/sortie', name: 'sortie_')]
+#[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
 {
 
-    #[Route('/', name: 'list')]
+    #[Route('/list', name: 'list')]
     public function list(SortieRepository $sortieRepository, Request $request): Response
     {
         $sortieSearch = new SortieSearch();
@@ -34,13 +33,14 @@ final class SortieController extends AbstractController
             $sorties = $sortieRepository->findAll();
         }
 
+        dump($sorties);
         return $this->render('sortie/list.html.twig', [
             'sorties' => $sorties,
             'formSearchFilter' => $searchSortieForm->createView(),
         ]);
     }
 
-    #[Route('/add', name: 'addSortie')]
+    #[Route('/addSortie', name: 'addSortie')]
     public function addSortie(
         SortieRepository $sortieRepository,
         EtatRepository $etatRepository,
@@ -65,12 +65,13 @@ final class SortieController extends AbstractController
             if($addSortieForm->get('annuler')->isClicked()) {
                 return $this->redirectToRoute('main_home');
             }
+            //TODO décommenter le setOrganiateur quand connexion/deco okay
             $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
             $entityManager->flush();
 
             $this->addFlash("success", "Sortie : " . $sortie->getNom() . " ajoutée !");
-            //TODO mettre bon return et vérifier avec les deux rôles
+            //TODO mettre bon return
             return $this->redirectToRoute('sortie_addSortie');
         }
         return $this->render('sortie/ajouter_sortie.html.twig', [
@@ -78,91 +79,20 @@ final class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(Sortie $sortie): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_AFFICHER', $sortie);
-        return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie,
-        ]);
-    }
+    #[Route('/detailSortie/{id}', name: 'detailSortie', requirements: ['id' => '\d+'])]
+    public function detailSortie(int $id, SortieRepository $sortieRepository): Response{
+        $sortie = $sortieRepository->find($id);
 
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_MODIFIER', $sortie);
-        $form = $this->createForm(AddSortieFormType::class, $sortie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('sortie_list', [], Response::HTTP_SEE_OTHER);
+        if (!$sortie) {
+            throw $this->createNotFoundException("Oops ! Cette sortie n'existe pas !");
         }
 
-        return $this->render('sortie/edit.html.twig', [
-            'sortie' => $sortie,
-            'addSortieForm' => $form,
+        //TODO afficher le détail d'une sortie
+        return $this->render('sortie/detailSortie.html.twig', [
+            'sortie' => $sortie
         ]);
+
+
     }
 
-    #[Route('/{id}/annuler', name: 'annuler', methods: ['POST'])]
-    public function annuler(Request $request, Sortie $sortie, EntityManagerInterface $entityManager, EtatRepository $etatRepository): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_ANNULER', $sortie);
-
-        $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
-        $sortie->setEtat($etat);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('sortie_list');
-    }
-
-    #[Route('/{id}/publier', name: 'publier', methods: ['POST'])]
-    public function publier(Request $request, Sortie $sortie, EntityManagerInterface $entityManager, EtatRepository $etatRepository): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_PUBLIER', $sortie);
-
-        $etat = $etatRepository->findOneBy(['libelle' => 'Ouverte']);
-        $sortie->setEtat($etat);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('sortie_list');
-    }
-
-    #[Route('/{id}/desister', name: 'desister', methods: ['POST'])]
-    public function desister(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_DESISTER', $sortie);
-
-        $participant = $this->getUser();
-        $sortie->removeParticipant($participant);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('sortie_list');
-    }
-
-    #[Route('/{id}/inscrire', name: 'inscrire', methods: ['POST'])]
-    public function inscrire(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_INSCRIRE', $sortie);
-
-        $participant = $this->getUser();
-        $sortie->addParticipant($participant);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('sortie_list');
-    }
-
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('SORTIE_SUPPRIMER', $sortie);
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($sortie);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('sortie_list', [], Response::HTTP_SEE_OTHER);
-    }
 }
