@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Importer des utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Importer des utilisateurs par CSV</h1>
+
+    <p>Le fichier CSV doit contenir les colonnes suivantes : nom, prenom, mail, telephone, campus.</p>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Importer</button>
+    {{ form_end(form) }}
+{% endblock %}

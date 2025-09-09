@@ -25,8 +25,7 @@
                 <td>{{ lieu.latitude }}</td>
                 <td>{{ lieu.longitude }}</td>
                 <td>
-                    <a href="{{ path('app_lieu_show', {'id': lieu.id}) }}">show</a>
-                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">edit</a>
+                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">détails</a>
                 </td>
             </tr>
         {% else %}

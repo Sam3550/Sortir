@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'utilisateur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ participant.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ participant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ participant.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Téléphone</th>
+                <td>{{ participant.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ participant.mail }}</td>
+            </tr>
+            <tr>
+                <th>Actif</th>
+                <td>{{ participant.actif ? 'Oui' : 'Non' }}</td>
+            </tr>
+            <tr>
+                <th>Organisateur</th>
+                <td>{{ participant.organisateur ? 'Oui' : 'Non' }}</td>
+            </tr>
+            <tr>
+                <th>Rôles</th>
+                <td>{{ participant.roles ? participant.roles|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Campus</th>
+                <td>{{ participant.campus.nom }}</td>
+            </tr>
+            <tr>
+                <th>Vérifié</th>
+                <td>{{ participant.isVerified ? 'Oui' : 'Non' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_participant_edit', {'id': participant.id}) }}">éditer</a>
+
+    <a href="{{ path('app_admin_participant_index') }}">retour à la liste</a>
+
+    {{ include('admin/participant/_delete_form.html.twig') }}
+{% endblock %}

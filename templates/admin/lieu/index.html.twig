@@ -11,6 +11,8 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Rue</th>
+                <th>Ville</th>
+                <th>Code Postal</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
                 <th>actions</th>
@@ -22,19 +24,21 @@
                 <td>{{ lieu.id }}</td>
                 <td>{{ lieu.nom }}</td>
                 <td>{{ lieu.rue }}</td>
+                <td>{{ lieu.ville.nom }}</td>
+                <td>{{ lieu.ville.codePostal }}</td>
                 <td>{{ lieu.latitude }}</td>
                 <td>{{ lieu.longitude }}</td>
                 <td>
-                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">edit</a>
+                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">détails</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_lieu_new') }}">Create new</a>
+    <a href="{{ path('app_lieu_new') }}">Nouveau lieu</a>
 {% endblock %}
