@@ -51,6 +51,28 @@ final class SortieController extends AbstractController
         ]);
     }
 
+    #[Route('/sortie/{id}/publier', name: 'publier')]
+    public function publierSortie(int $id, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager): Response
+
+    {
+
+        $sortie = $sortieRepository->find($id);
+        if ($sortie->getEtat()->getLibelle() === \App\Entity\Etat::CREEE) {
+            $etat = $etatRepository->findOneBy(['libelle' => 'Ouverte']);
+
+            $sortie->setEtat($etat);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+        }
+
+
+        // persist et flush...
+
+        return $this->redirectToRoute('sortie_list', ['id' => $id]);
+
+    }
+
     #[Route('/addSortie', name: 'addSortie')]
     public function addSortie(
         SortieRepository       $sortieRepository,
