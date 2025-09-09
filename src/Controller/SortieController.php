@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AddSortieFormType;
+use App\Form\DeleteSortieFormType;
 use App\Form\Models\SortieSearch;
 use App\Form\SortieFilterSearchType;
 use App\Repository\EtatRepository;
+use App\Repository\SerieRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,7 +55,7 @@ final class SortieController extends AbstractController
         $addSortieForm->handleRequest($request);
 
         if ($addSortieForm->isSubmitted() && $addSortieForm->isValid()) {
-            //dd($addSortieForm);
+
             if($addSortieForm->get('enregistrer')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['libelle' => 'Créée']);
                 $sortie->setEtat($etat);
@@ -63,7 +65,7 @@ final class SortieController extends AbstractController
                 $sortie->setEtat($etat);
             }
             if($addSortieForm->get('annuler')->isClicked()) {
-                return $this->redirectToRoute('main_home');
+                return $this->redirectToRoute('sortie_list');
             }
             $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
@@ -90,8 +92,81 @@ final class SortieController extends AbstractController
         return $this->render('sortie/detailSortie.html.twig', [
             'sortie' => $sortie
         ]);
-
-
     }
 
+    #[Route('/update/{id}', name: 'update', requirements: ['id' => '\d+'])]
+    public function update(
+        int $id,
+        SortieRepository $sortieRepository,
+        EtatRepository $etatRepository,
+        Request $request,
+        EntityManagerInterface $entityManager): Response
+    {
+        $sortie = $sortieRepository->find($id);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas !");
+        }
+
+        $sortieAnnulerForm = $this->createForm(DeleteSortieFormType::class, $sortie);
+        $sortieAnnulerForm->handleRequest($request);
+
+        //Attention : on annule une sortie mais on ne la supprime pas de la BDD, c'est un update d'état
+        // + ajout du motif de l'annulation !
+        if($sortieAnnulerForm->isSubmitted() && $sortieAnnulerForm->isValid()) {
+
+            if($sortieAnnulerForm->get('annuler')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+                $sortie->setEtat($etat);
+            }
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('sortie_detailSortie', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/annuler_sortie.html.twig', [
+            'sortie' => $sortie,
+            'sortieAnnulerForm' => $sortieAnnulerForm
+        ]);
+    }
+
+    #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
+    public function delete(
+        int $id,
+        SortieRepository $sortieRepository,
+        EtatRepository $etatRepository,
+        Request $request,
+        EntityManagerInterface $entityManager): Response
+    {
+        $sortie = $sortieRepository->find($id);
+
+        if (!$sortie) {
+            throw $this->createNotFoundException("Cette sortie n'existe pas !");
+        }
+
+        $sortieAnnulerForm = $this->createForm(DeleteSortieFormType::class, $sortie);
+        $sortieAnnulerForm->handleRequest($request);
+
+        //Attention : on annule une sortie mais on ne la supprime pas de la BDD, c'est un update d'état
+        // + ajout du motif de l'annulation !
+        if($sortieAnnulerForm->isSubmitted() && $sortieAnnulerForm->isValid()) {
+
+            if($sortieAnnulerForm->get('annuler')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+                $sortie->setEtat($etat);
+            }
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('sortie_detailSortie', ['id' => $sortie->getId()]);
+        }
+
+        return $this->render('sortie/annuler_sortie.html.twig', [
+            'sortie' => $sortie,
+            'sortieAnnulerForm' => $sortieAnnulerForm
+        ]);
+    }
 }
