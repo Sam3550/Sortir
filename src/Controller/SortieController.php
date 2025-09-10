@@ -129,7 +129,7 @@ final class SortieController extends AbstractController
         }
 
         //TODO afficher le détail d'une sortie
-        return $this->render('sortie/detailSortie.html.twig', [
+        return $this->render('sortie/detail.html.twig', [
             'sortie' => $sortie
         ]);
     }
