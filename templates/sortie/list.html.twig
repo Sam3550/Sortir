@@ -100,7 +100,7 @@
                     <td class="border border-gray-400 px-4 py-2">
                         <div class="flex flex-wrap gap-2">
                             {% if is_granted('SORTIE_AFFICHER', sortie) %}
-                                <a href="{{ path('sortie_detailSortie', {"id" : sortie.id}) }}"
+                                <a href="{{ path('sortie_detail', {"id" : sortie.id}) }}"
                                    class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
                             {% endif %}
 

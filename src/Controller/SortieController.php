@@ -122,7 +122,6 @@ final class SortieController extends AbstractController
             throw $this->createNotFoundException("Oops ! Cette sortie n'existe pas !");
         }
 
-        //TODO afficher le détail d'une sortie
         return $this->render('sortie/detailSortie.html.twig', [
             'sortie' => $sortie
         ]);
