@@ -14,8 +14,8 @@
             <div class="flex items-center gap-4 mb-4 mx-4">
                 <p><b>Lieu de la sortie :</b> {{ sortie.lieu.nom }} {{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}</p>
             </div>
-            <div class="flex items-center gap-4 mb-4 mx-4">
-                {{ form_label(sortieAnnulerForm.motif, null, {'label_attr': {'class': 'w-40 text-base font-bold text-black-700'}}) }}
+            <div class="flex items-start gap-4 mb-4 mx-4">
+                {{ form_label(sortieAnnulerForm.motif, null, {'label_attr': {'class': 'w-24 text-base font-bold text-black-700'}}) }}
                 {{ form_widget(sortieAnnulerForm.motif) }}
             </div>
 
@@ -24,11 +24,7 @@
     </div>
     <div class="flex justify-center gap-4 mt-4">
         {{ form_widget(sortieAnnulerForm.annuler) }}
-        <a href="{{ path('sortie_detailSortie', {'id':sortie.id}) }}" class="w-32 h-15 bg-slate-300/75 hover:bg-slate-400/50 rounded-md inline-flex items-center justify-center">Retour</a>
+        <a href="{{ path('sortie_detail', {'id':sortie.id}) }}" class="w-32 h-15 bg-slate-300/75 hover:bg-slate-400/50 rounded-md inline-flex items-center justify-center">Retour</a>
     </div>
-    {#<div>
-        <a href="">Modifier la sortie</a>
-        <a href="{{ path('sortie_delete', {'id':sortie.id}) }}">Supprimer la sortie</a>
-    </div>#}
     {{ form_end(sortieAnnulerForm) }}
 {% endblock %}
