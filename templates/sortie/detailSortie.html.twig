@@ -14,7 +14,7 @@
                 <p><b>Date limite d'inscription :</b> {{ sortie.dateLimiteInscription | date("Y-m-d") }}</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
-                <p><b>Nombre de places :</b> {{ sortie.nbInscriptionMax }}</p>
+                <p><b>Nombre de places restantes :</b> {{ max(0, sortie.nbInscriptionMax - sortie.participants|length) }}</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
                 <p><b>Durée de la sortie :</b> {{ sortie.duree }} minutes</p>
@@ -37,13 +37,14 @@
                 <p><b>Code postal :</b> {{ sortie.lieu.ville.codePostal }}</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
-                <p><b>Lieu de la sortie :</b> {{ sortie.lieu.latitude }}</p>
+                <p><b>Latitude :</b> {{ sortie.lieu.latitude }}</p>
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
-                <p><b>Lieu de la sortie :</b> {{ sortie.lieu.longitude }}</p>
+                <p><b>Longitude :</b> {{ sortie.lieu.longitude }}</p>
             </div>
         </div>
     </div>
+    {% if sortie.participants | length>0 %}
     <div class="mx-4">
         <h2><b>Liste des participants inscrits :</b></h2>
         <table class="border-1 border-slate-400 mt-2">
@@ -64,10 +65,16 @@
             </tbody>
         </table>
     </div>
-    {#<div class="flex justify-center gap-4 mt-4">
-        {{ form_widget(addSortieForm.enregistrer) }}
-        {{ form_widget(addSortieForm.publier) }}
-        {{ form_widget(addSortieForm.annuler) }}
-    </div>#}
+    {% endif %}
+    {% if(app.user.id == sortie.organisateur.id) %}
+    <div class="flex justify-center items-center gap-4 mt-8">
+        {% if(sortie.etat.libelle == "Créée") %}
+            <a href="{{ path('sortie_update', {'id':sortie.id}) }}" class="w-40 h-15 bg-emerald-300/75 hover:bg-emerald-400/50 rounded-md inline-flex items-center justify-center">Modifier la sortie</a>
+        {% endif %}
+        {% if(sortie.etat.libelle == "Ouverte") %}
+            <a href="{{ path('sortie_delete', {'id':sortie.id}) }}" class="w-40 h-15 bg-rose-300/75 hover:bg-rose-400/50 rounded-md inline-flex items-center justify-center">Annuler la sortie</a>
+        {% endif %}
 
+    </div>
+    {% endif %}
 {% endblock %}

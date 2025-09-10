@@ -49,6 +49,7 @@
         {{ form_widget(addSortieForm.enregistrer) }}
         {{ form_widget(addSortieForm.publier) }}
         {{ form_widget(addSortieForm.annuler) }}
+        {{ form_widget(addSortieForm.supprimer, {'attr': {'class': 'hidden'}}) }}
     </div>
     {{ form_end(addSortieForm) }}
 {% endblock %}
