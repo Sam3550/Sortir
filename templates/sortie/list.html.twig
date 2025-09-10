@@ -89,9 +89,9 @@
                     <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle }}</td>
                     <td class="border border-gray-400 px-4 py-2 text-center">
                         {% if app.user in sortie.participants %}
-                            class="text-green-500 font-bold">✓</span>
+                            <span class="text-green-500 font-bold">✓</span>
                         {% else %}
-                            class="text-red-400">x</span>
+                            <span class="text-red-400">x</span>
                         {% endif %}
                     </td>
                     <td class="border border-gray-400 px-4 py-2">
@@ -104,7 +104,7 @@
                                    class="text-blue-600 hover:text-blue-800 underline">Afficher</a>
                             {% endif %}
 
-                            {% if is_granted('SORTIE_INSCRIRE', sortie)  %}
+                            {% if is_granted('SORTIE_INSCRIRE', sortie) %}
                                 <a href="{{ path('inscrit', {"id" : sortie.id}) }}"
                                    class="text-green-600 hover:text-green-800 underline">S'inscrire</a>
                             {% endif %}
@@ -118,7 +118,8 @@
                                 <a href="#" class="text-yellow-600 hover:text-yellow-800 underline">Modifier</a>
                             {% endif %}
                             {% if is_granted('SORTIE_PUBLIER', sortie) %}
-                                <a href="{{ path('sortie_publier', {"id" : sortie.id}) }}" class="text-blue-600 hover:text-blue-800 underline">Publier</a>
+                                <a href="{{ path('sortie_publier', {"id" : sortie.id}) }}"
+                                   class="text-blue-600 hover:text-blue-800 underline">Publier</a>
                             {% endif %}
                             {% if is_granted('SORTIE_ANNULER', sortie) %}
                                 <a href="#" class="text-red-600 hover:text-red-800 underline">Annuler</a>
