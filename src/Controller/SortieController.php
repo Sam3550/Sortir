@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\AddSortieFormType;
 use App\Form\DeleteSortieFormType;
@@ -90,20 +91,16 @@ final class SortieController extends AbstractController
         if ($addSortieForm->isSubmitted() && $addSortieForm->isValid()) {
 
             if($addSortieForm->get('enregistrer')->isClicked()) {
-
                 $etat = $etatRepository->findOneBy(['libelle' => 'Créée']);
                 $sortie->setEtat($etat);
             }
-            if ($addSortieForm->get('publier')->isClicked()) {
+            if($addSortieForm->get('publier')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['libelle' => 'Ouverte']);
                 $sortie->setEtat($etat);
             }
-
             if($addSortieForm->get('annuler')->isClicked()) {
                 return $this->redirectToRoute('sortie_list');
-
             }
-            //TODO décommenter le setOrganiateur quand connexion/deco okay
             $sortie->setOrganisateur($this->getUser());
             $entityManager->persist($sortie);
             $entityManager->flush();
@@ -117,18 +114,14 @@ final class SortieController extends AbstractController
         ]);
     }
 
-
     #[Route('/detail/{id}', name: 'detail', requirements: ['id' => '\d+'])]
     public function detailSortie(int $id, SortieRepository $sortieRepository): Response{
-
-
         $sortie = $sortieRepository->find($id);
 
         if (!$sortie) {
             throw $this->createNotFoundException("Oops ! Cette sortie n'existe pas !");
         }
 
-        //TODO afficher le détail d'une sortie
         return $this->render('sortie/detailSortie.html.twig', [
             'sortie' => $sortie
         ]);
