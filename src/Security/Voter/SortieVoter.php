@@ -88,7 +88,7 @@ final class SortieVoter extends Voter
 
     private function inscrire(Sortie $sortie, UserInterface $participant): bool
     {
-        if (!$sortie->getParticipants()->contains($participant) && $sortie->getEtat()->getLibelle() !== Etat::CREEE) {
+        if (!$sortie->getParticipants()->contains($participant) && $sortie->getEtat()->getLibelle() === Etat::OUVERTE) {
             return true; // peut s'inscrire
         } else {
             return false; // déjà participant → interdit

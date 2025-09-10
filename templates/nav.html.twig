@@ -21,9 +21,12 @@
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                            <a href="{{ path('app_magic_login') }}" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Accueil</a>
+                            <a href="{{ path('sortie_list') }}" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Accueil</a>
                             <a href="{{ path('sortie_addSortie') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Ajouter une sortie</a>
-                            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">TTT</a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_admin_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Administration</a>
+                            {% endif %}
+                            <a href="{{ path('app_magic_login') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Mon profil</a>
                             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">TTTT</a>
                         </div>
                     </div>
