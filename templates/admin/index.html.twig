@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    <h1>Tableau de bord Administrateur</h1>
+
+    <div class="list-group">
+        <a href="{{ path('app_ville_index') }}" class="list-group-item list-group-item-action">Gérer les villes</a>
+        <a href="{{ path('app_campus_index') }}" class="list-group-item list-group-item-action">Gérer les campus</a>
+        <a href="{{ path('app_lieu_index') }}" class="list-group-item list-group-item-action">Gérer les lieux</a>
+        <a href="{{ path('app_admin_register') }}" class="list-group-item list-group-item-action">Ajouter un utilisateur</a>
+        <a href="{{ path('app_admin_register_csv') }}" class="list-group-item list-group-item-action">Importer des utilisateurs (CSV)</a>
+        <a href="{{ path('app_admin_participant_index') }}" class="list-group-item list-group-item-action">Gérer les utilisateurs</a>
+    </div>
+{% endblock %}

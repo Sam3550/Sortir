@@ -1,8 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <div class="flex justify-center my-6 text-4xl"><h1>Ajouter une sortie</h1></div>
-    {{ form_start(addSortieForm) }}
+{{ form_start(addSortieForm) }}
     <div class="flex gap-4 w-auto mt-15">
         <div class="w-full">
             <div class="flex items-center gap-4 mb-4 mx-4">
@@ -13,12 +9,9 @@
                 {{ form_label(addSortieForm.dateHeureDebut, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
                 {{ form_widget(addSortieForm.dateHeureDebut) }}
             </div>
-            <div class="mb-4 mx-4">
-                <div class="flex items-center gap-4 mb-1">
-                    {{ form_label(addSortieForm.dateLimiteInscription, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
-                    {{ form_widget(addSortieForm.dateLimiteInscription) }}
-                </div>
-                <span id="error_date" class="text-red-500 text-sm block ml-44"></span>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.dateLimiteInscription, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.dateLimiteInscription) }}
             </div>
             <div class="flex items-center gap-4 mb-4 mx-4">
                 {{ form_label(addSortieForm.nbInscriptionMax, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
@@ -35,10 +28,6 @@
         </div>
         <div class="w-full">
             <div class="flex items-center gap-4 mb-4 mx-4">
-                {{ form_label(addSortieForm.ville, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
-                {{ form_widget(addSortieForm.ville) }}
-            </div>
-            <div class="flex items-center gap-4 mb-4 mx-4">
                 {{ form_label(addSortieForm.lieu, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
                 {{ form_widget(addSortieForm.lieu) }}
             </div>
@@ -46,15 +35,6 @@
     </div>
 
     <div class="flex justify-center gap-4 mt-4">
-        {{ form_widget(addSortieForm.enregistrer) }}
-        {{ form_widget(addSortieForm.publier) }}
-        {{ form_widget(addSortieForm.annuler) }}
-        {{ form_widget(addSortieForm.supprimer, {'attr': {'class': 'hidden'}}) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
     </div>
-    {{ form_end(addSortieForm) }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/comparaisonDate.js') }}"></script>
-{% endblock %}
+{{ form_end(addSortieForm) }}
