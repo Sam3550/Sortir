@@ -11,7 +11,7 @@ security:
                 property: mail
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js|check-pseudo)/
             security: false
         main:
             lazy: true
@@ -20,16 +20,19 @@ security:
               secret: '%kernel.secret%'
               lifetime: 31536000
             form_login:
-                login_path: app_magic_login
+                login_path: app_login
+                check_path: app_login # Explicitly define check_path
                 default_target_path: sortie_list
                 enable_csrf: true
             logout:
                 path: app_logout
-                target: app_magic_login
+                target: app_home
     access_control:
         # The login flow paths must be public
-        - { path: ^/login-password, roles: PUBLIC_ACCESS }
-        - { path: ^/register-complete, roles: PUBLIC_ACCESS }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/inscription, roles: PUBLIC_ACCESS }
+        - { path: ^/inscription/finaliser, roles: PUBLIC_ACCESS }
+        - { path: ^/check-pseudo, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
         # All other paths require a logged-in user
         - { path: ^/, roles: ROLE_USER }
@@ -46,3 +49,4 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+

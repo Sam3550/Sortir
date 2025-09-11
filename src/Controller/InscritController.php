@@ -20,7 +20,7 @@ final class InscritController extends AbstractController
 
         if (!$userConnecter) {
             $this->addFlash('error', 'Il faut que vous soyez connecté pour vous inscrire.');
-            return $this->redirectToRoute('app_magic_login');
+            return $this->redirectToRoute('app_login');
         }
 
         $sortie->addParticipant($userConnecter);
@@ -50,7 +50,7 @@ final class InscritController extends AbstractController
 
         if (!$userConnecter) {
             $this->addFlash('error', 'Il faut que vous soyez connecté pour vous inscrire.');
-            return $this->redirectToRoute('app_magic_login');
+            return $this->redirectToRoute('app_login');
         }
 
         $sortie->removeParticipant($userConnecter);

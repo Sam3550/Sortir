@@ -89,9 +89,9 @@
                     <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle }}</td>
                     <td class="border border-gray-400 px-4 py-2 text-center">
                         {% if app.user in sortie.participants %}
-                            class="text-green-500 font-bold">✓</span>
+                            <span class="text-green-500 font-bold">✓</span>
                         {% else %}
-                            class="text-red-400">x</span>
+                            <span class="text-red-400">x</span>
                         {% endif %}
                     </td>
                     <td class="border border-gray-400 px-4 py-2">

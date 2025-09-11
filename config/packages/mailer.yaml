@@ -2,4 +2,4 @@ framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
         envelope:
-          sender: 'sortir@ik.me' # Adresse de l'expéditeur
+          sender: '%env(APP_MAILER_FROM)%' # Adresse de l'expéditeur

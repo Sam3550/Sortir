@@ -5,12 +5,12 @@
 {% block body %}
     <h1>Tableau de bord Administrateur</h1>
 
-    <div class="list-group">
-        <a href="{{ path('app_ville_index') }}" class="list-group-item list-group-item-action">Gérer les villes</a>
-        <a href="{{ path('app_campus_index') }}" class="list-group-item list-group-item-action">Gérer les campus</a>
-        <a href="{{ path('app_lieu_index') }}" class="list-group-item list-group-item-action">Gérer les lieux</a>
-        <a href="{{ path('app_admin_register') }}" class="list-group-item list-group-item-action">Ajouter un utilisateur</a>
-        <a href="{{ path('app_admin_register_csv') }}" class="list-group-item list-group-item-action">Importer des utilisateurs (CSV)</a>
-        <a href="{{ path('app_admin_participant_index') }}" class="list-group-item list-group-item-action">Gérer les utilisateurs</a>
+    <div class="flex flex-col space-y-4 mt-6">
+        <a href="{{ path('app_ville_index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Gérer les villes</a>
+        <a href="{{ path('app_campus_index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Gérer les campus</a>
+        <a href="{{ path('app_lieu_index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Gérer les lieux</a>
+        <a href="{{ path('app_admin_register') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Ajouter un utilisateur</a>
+        <a href="{{ path('app_admin_register_csv') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Importer des utilisateurs (CSV)</a>
+        <a href="{{ path('app_admin_participant_index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 text-center">Gérer les utilisateurs</a>
     </div>
 {% endblock %}

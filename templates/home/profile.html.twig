@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}[Mon profil]{% endblock %}
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
     <h1>Mon profil</h1>
+
+    {% if app.user.avatar %}
+        <img src="{{ asset('uploads/avatars/' ~ app.user.avatar) }}" alt="Avatar de {{ app.user.prenom }}" width="100">
+    {% else %}
+        <img src="{{ asset('images/default_avatar.png') }}" alt="Avatar par défaut" width="100">
+    {% endif %}
 
     {{ form_start(form) }}
     {{ form_widget(form) }}

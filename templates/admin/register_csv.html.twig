@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrire des utilisateurs par CSV{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-4">Inscrire des utilisateurs par CSV</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.csv_file) }}
+
+        <button type="submit" class="btn btn-primary mt-3">Uploader et inscrire</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -56,8 +56,8 @@ final class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin_index');
         }
 
-                return $this->render('admin/register_csv.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('admin/register.html.twig', [
+            'registrationForm' => $form->createView(),
         ]);
     }
 
@@ -71,7 +71,8 @@ final class AdminController extends AbstractController
             $csvFile = $form->get('csv_file')->getData();
             
             if ($csvFile) {
-                $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+                $csvEncoder = new CsvEncoder([CsvEncoder::DELIMITER_KEY => ';']);
+                $serializer = new Serializer([new ObjectNormalizer()], [$csvEncoder]);
                 $data = $serializer->decode(file_get_contents($csvFile), 'csv');
 
                 $createdCount = 0;

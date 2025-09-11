@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Sortie{% endblock %}
+{% block title %}Modifier une sortie{% endblock %}
 
 {% block body %}
-    <h1>Edit Sortie</h1>
-
-    {{ include('sortie/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('sortie_list') }}">back to list</a>
-
-    {{ include('sortie/_delete_form.html.twig') }}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mt-5">
+                    <div class="card-header text-center">
+                        <h2>Modifier une sortie</h2>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(addSortieForm) }}
+                            {{ form_widget(addSortieForm) }}
+                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        {{ form_end(addSortieForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

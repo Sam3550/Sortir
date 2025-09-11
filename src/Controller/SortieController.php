@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/', name: 'sortie_')]
 final class SortieController extends AbstractController
@@ -127,6 +128,41 @@ final class SortieController extends AbstractController
         ]);
 
 
+    }
+
+    #[Route('/sortie/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function edit(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(AddSortieFormType::class, $sortie); // Assuming AddSortieFormType can be used for editing
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie mise à jour avec succès.');
+
+            return $this->redirectToRoute('sortie_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('sortie/edit.html.twig', [
+            'sortie' => $sortie,
+            'addSortieForm' => $form,
+        ]);
+    }
+
+    #[Route('/sortie/{id}/delete', name: 'delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function delete(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie supprimée avec succès.');
+        }
+
+        return $this->redirectToRoute('sortie_list', [], Response::HTTP_SEE_OTHER);
     }
 
 }

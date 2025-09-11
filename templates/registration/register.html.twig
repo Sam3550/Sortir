@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compléter votre inscription{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mt-5">
+                    <div class="card-header text-center">
+                        <h2>Compléter votre inscription</h2>
+                    </div>
+                    <div class="card-body">
+                        {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
+                        {{ form_start(registrationForm) }}
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.mail) }}
+                                {{ form_widget(registrationForm.mail) }}
+                                {{ form_errors(registrationForm.mail) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.pseudo) }}
+                                {{ form_widget(registrationForm.pseudo, {'attr': {'data-check-pseudo-url': path('app_check_pseudo')|e('html_attr')}})}}
+                                {{ form_errors(registrationForm.pseudo) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.nom) }}
+                                {{ form_widget(registrationForm.nom) }}
+                                {{ form_errors(registrationForm.nom) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.prenom) }}
+                                {{ form_widget(registrationForm.prenom) }}
+                                {{ form_errors(registrationForm.prenom) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.telephone) }}
+                                {{ form_widget(registrationForm.telephone) }}
+                                {{ form_errors(registrationForm.telephone) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.campus) }}
+                                {{ form_widget(registrationForm.campus) }}
+                                {{ form_errors(registrationForm.campus) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.plainPassword) }}
+                                {{ form_widget(registrationForm.plainPassword) }}
+                                {{ form_errors(registrationForm.plainPassword) }}
+                            </div>
+                            <div class="mb-3">
+                                {{ form_label(registrationForm.confirmPassword) }}
+                                {{ form_widget(registrationForm.confirmPassword) }}
+                                {{ form_errors(registrationForm.confirmPassword) }}
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">S'inscrire</button>
+                        {{ form_end(registrationForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/pseudoCheck.js') }}"></script>
+{% endblock %}

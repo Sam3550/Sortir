@@ -1,0 +1,14 @@
+Bonjour {{ participant.prenom }},
+
+Merci de vous être inscrit sur Sortir.com !
+
+Pour activer votre compte et définir votre mot de passe, veuillez cliquer sur le lien ci-dessous :
+
+{{ url('app_register_complete_with_token', { token: token }) }}
+
+Ce lien expirera dans 1 heure.
+
+Si vous n'avez pas créé de compte, veuillez ignorer cet e-mail.
+
+Cordialement,
+L'équipe Sortir.com

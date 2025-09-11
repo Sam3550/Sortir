@@ -25,7 +25,7 @@
                 <td>{{ participant.nom }}</td>
                 <td>{{ participant.prenom }}</td>
                 <td>{{ participant.mail }}</td>
-                <td>{{ participant.campus.nom }}</td>
+                <td>{{ participant.campus ? participant.campus.nom : 'Non défini' }}</td>
                 <td>{{ participant.roles ? participant.roles|join(', ') : '' }}</td>
                 <td>{{ participant.actif ? 'Oui' : 'Non' }}</td>
                 <td>
