@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="flex justify-center my-6 text-4xl"><h1>Ajouter une sortie</h1></div>
+    {{ form_start(sortieMAJForm) }}
+    <div class="flex gap-4 w-auto mt-15">
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.nom, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.nom) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.dateHeureDebut, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.dateHeureDebut) }}
+            </div>
+            <div class="mb-4 mx-4">
+                <div class="flex items-center gap-4 mb-1">
+                    {{ form_label(sortieMAJForm.dateLimiteInscription, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                    {{ form_widget(sortieMAJForm.dateLimiteInscription) }}
+                </div>
+                <span id="error_date" class="text-red-500 text-sm block ml-44"></span>
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.nbInscriptionMax, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.nbInscriptionMax) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.duree, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.duree) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.infosSortie, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.infosSortie) }}
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.ville, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.ville) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(sortieMAJForm.lieu, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(sortieMAJForm.lieu) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-center gap-4 mt-4">
+        {{ form_widget(sortieMAJForm.enregistrer) }}
+        {{ form_widget(sortieMAJForm.publier) }}
+        {{ form_widget(sortieMAJForm.supprimer, {'attr': {'onclick': 'return confirm("Êtes-vous sûr de vouloir supprimer cette sortie ?")'}}) }}
+        {{ form_widget(sortieMAJForm.annuler) }}
+    </div>
+    {{ form_end(sortieMAJForm) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/comparaisonDate.js') }}"></script>
+{% endblock %}
