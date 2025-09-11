@@ -18,6 +18,11 @@
                value="{{ csrf_token('authenticate') }}"
         >
 
+        <input type="checkbox" id="remember_me" name="_remember_me">
+        <label for="remember_me">Se souvenir de moi</label>
+
         <button type="submit">Connexion</button>
+
+        <p><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a></p>
     </form>
 {% endblock %}
