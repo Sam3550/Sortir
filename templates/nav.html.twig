@@ -16,13 +16,14 @@
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex shrink-0 items-center">
-                        <img src="{{ asset('img/fw.png')}}" alt="Your Company" class="h-10 w-auto" />
+                        <a href="{{ path('sortie_list') }}" aria-current="page" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"><img src="{{ asset('img/fw.png')}}" alt="Your Company" class="h-10 w-auto" /></a>
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                            <a href="{{ path('sortie_list') }}" aria-current="page" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">Accueil</a>
+                            {% if app.user %}
                             <a href="{{ path('sortie_addSortie') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Ajouter une sortie</a>
+                            {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('app_admin_index') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Administration</a>
                             {% endif %}
@@ -61,7 +62,7 @@
                         </div>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Connexion</a>
-                        <a href="{{ path('app_register_check_email') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Inscription</a>
+                        
                     {% endif %}
                 </div>
             </div>
@@ -69,11 +70,21 @@
 
         <el-disclosure id="mobile-menu" hidden class="block sm:hidden">
             <div class="space-y-1 px-2 pt-2 pb-3">
+                {% if app.user %}
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                <a href="#" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Dashboard</a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Team</a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Projects</a>
-                <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Calendar</a>
+
+                {% if app.user %}
+                <a href="{{ path('sortie_addSortie') }}" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Ajouter une sortie</a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_index') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Administration</a>
+                {% endif %}
+                <a href="{{ path('app_profile') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Mon Profil</a>
+                <a href="{{ path('app_logout') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Déconnexion</a>
+                {% else %}
+                <a href="{{ path('app_login') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Connexion</a>
+                
+                {% endif %}
             </div>
         </el-disclosure>
 </nav>

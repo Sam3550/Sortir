@@ -89,6 +89,7 @@ class AppFixtures extends Fixture
             $participant
                 ->setNom($faker->lastName())
                 ->setPrenom($faker->firstName())
+                ->setPseudo($faker->userName())
                 ->setTelephone($faker->phoneNumber())
                 ->setMail($faker->companyEmail())
                 ->setMotPasse($hashedPassword)

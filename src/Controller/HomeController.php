@@ -16,7 +16,11 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function home(): Response
     {
-        return $this->render('home/index.html.twig');
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('sortie_list');
+        }
+
+        return $this->redirectToRoute('app_entry');
     }
 
     #[Route('/profil', name: 'app_profile')]

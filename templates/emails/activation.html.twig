@@ -1,16 +1,14 @@
-<p>Bonjour {{ participant.prenom }},</p>
+<p>Bonjour,</p>
 
-<p>Merci de vous être inscrit sur Sortir.com !</p>
+<p>Merci de votre intérêt pour Sortir.com !</p>
 
-<p>Pour activer votre compte et définir votre mot de passe, veuillez cliquer sur le lien ci-dessous :</p>
+<p>Pour finaliser votre inscription, veuillez cliquer sur le lien ci-dessous :</p>
 
 <p>
-    <a href="{{ url('app_register_complete_with_token', { token: token }) }}">Activer mon compte</a>
+    <a href="{{ url('app_register', { token: token }) }}">Finaliser mon inscription</a>
 </p>
 
-<p>Ce lien expirera dans 1 heure.</p>
-
-<p>Si vous n'avez pas créé de compte, veuillez ignorer cet e-mail.</p>
+<p>Si vous n'avez pas tenté de vous inscrire, veuillez ignorer cet e-mail.</p>
 
 <p>Cordialement,</p>
 <p>L'équipe Sortir.com</p>

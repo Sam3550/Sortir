@@ -23,7 +23,7 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 50, unique: true)]
+    #[ORM\Column(length: 50, unique: true, nullable: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 20, nullable: true)]
@@ -55,6 +55,12 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isProfileComplete = false;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $registrationToken = null;
 
     public function getOrganisateur(): ?bool
     {

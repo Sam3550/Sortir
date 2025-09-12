@@ -31,6 +31,7 @@ class AdminFixtures extends Fixture
         );
         $admin->setNom('Admin');
         $admin->setPrenom('User');
+        $admin->setPseudo('admin');
         $admin->setActif(true);
         $admin->setIsVerified(true);
 

@@ -1,7 +1,8 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\Participant:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
@@ -20,20 +21,22 @@ security:
               secret: '%kernel.secret%'
               lifetime: 31536000
             form_login:
-                login_path: app_login
+                login_path: app_entry
                 check_path: app_login # Explicitly define check_path
                 default_target_path: sortie_list
                 enable_csrf: true
+                username_parameter: email
             logout:
                 path: app_logout
                 target: app_home
     access_control:
         # The login flow paths must be public
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/inscription, roles: PUBLIC_ACCESS }
-        - { path: ^/inscription/finaliser, roles: PUBLIC_ACCESS }
+        - { path: ^/entry, roles: PUBLIC_ACCESS }
+        - { path: ^/entry/password, roles: PUBLIC_ACCESS }
         - { path: ^/check-pseudo, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/inscription/finaliser, roles: PUBLIC_ACCESS }
+        - { path: ^/reset-password, roles: PUBLIC_ACCESS }
         # All other paths require a logged-in user
         - { path: ^/, roles: ROLE_USER }
 
