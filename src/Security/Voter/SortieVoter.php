@@ -69,7 +69,8 @@ final class SortieVoter extends Voter
 
     private function afficher(Sortie $sortie, UserInterface $participant): bool
     {
-        if ($sortie->getEtat()->getLibelle() !== Etat::CREEE || $participant === $sortie->getOrganisateur()) {
+        $etat = $sortie->getEtat();
+        if ($etat && $etat->getLibelle() !== Etat::CREEE || $participant === $sortie->getOrganisateur()) {
             return true;
         }
         return false;
@@ -88,7 +89,8 @@ final class SortieVoter extends Voter
 
     private function inscrire(Sortie $sortie, UserInterface $participant): bool
     {
-        if (!$sortie->getParticipants()->contains($participant) && $sortie->getEtat()->getLibelle() === Etat::OUVERTE) {
+        $etat = $sortie->getEtat();
+        if ($etat && !$sortie->getParticipants()->contains($participant) && $etat->getLibelle() === Etat::OUVERTE) {
             return true; // peut s'inscrire
         } else {
             return false; // déjà participant → interdit
@@ -97,7 +99,8 @@ final class SortieVoter extends Voter
 
     private function modifier(Sortie $sortie, UserInterface $participant): bool
     {
-        if ($sortie->getEtat()->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
+        $etat = $sortie->getEtat();
+        if ($etat && $etat->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
             return true; // peut modifer
         } else {
             return false; // pas possible de modifier
@@ -106,7 +109,8 @@ final class SortieVoter extends Voter
 
     private function publier(Sortie $sortie, UserInterface $participant): bool
     {
-        if ($sortie->getEtat()->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
+        $etat = $sortie->getEtat();
+        if ($etat && $etat->getLibelle() === Etat::CREEE and $participant === $sortie->getOrganisateur()) {
             return true; // peut publier
         } else {
             return false; // peut pas publier
@@ -115,7 +119,8 @@ final class SortieVoter extends Voter
 
     private function annuler(Sortie $sortie, UserInterface $participant): bool
     {
-        if ($sortie->getEtat()->getLibelle() === Etat::OUVERTE and $participant === $sortie->getOrganisateur()) {
+        $etat = $sortie->getEtat();
+        if ($etat && $etat->getLibelle() === Etat::OUVERTE and $participant === $sortie->getOrganisateur()) {
             return true; // peut annuler
         } else {
             return false; // peut pas annuler

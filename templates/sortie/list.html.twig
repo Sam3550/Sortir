@@ -86,7 +86,7 @@
                     </td>
                     <td class="border border-gray-400 px-4 py-2">{{ sortie.participants|length }}
                         /{{ sortie.nbInscriptionMax }}</td>
-                    <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle }}</td>
+                    <td class="border border-gray-400 px-4 py-2">{{ sortie.etat.libelle ?? 'N/A' }}</td>
                     <td class="border border-gray-400 px-4 py-2 text-center">
                         {% if app.user in sortie.participants %}
                             <span class="text-green-500 font-bold">✓</span>
