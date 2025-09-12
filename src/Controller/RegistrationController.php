@@ -143,20 +143,20 @@ class RegistrationController extends AbstractController
             );
 
             $participant->setIsVerified(true);
-            $participant->setActif(true); // Mark as active
-            $participant->setActivationToken(null); // Clear token
-            $participant->setTokenExpiresAt(null); // Clear expiry date
+            $participant->setActif(true);
+            $participant->setActivationToken(null);
+            $participant->setTokenExpiresAt(null);
 
             $entityManager->persist($participant);
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre compte a été activé et votre mot de passe a été défini avec succès. Vous pouvez maintenant vous connecter.');
-            return $this->redirectToRoute('app_login'); // Redirect to login page
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'email' => $participant->getMail(), // Pass email to the template
+            'email' => $participant->getMail(),
         ]);
     }
 

@@ -19,7 +19,6 @@ final class HomeController extends AbstractController
         if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('sortie_list');
         }
-
         return $this->redirectToRoute('app_register_check_email');
     }
 
