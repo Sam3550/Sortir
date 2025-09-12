@@ -55,6 +55,7 @@ class RegistrationController extends AbstractController
             $newParticipant->setActif(false);
             $newParticipant->setRoles(['ROLE_USER']);
             $newParticipant->setMotPasse(null); // Password will be set during activation
+            $newParticipant->setPseudo('temp_' . uniqid()); // Set a temporary pseudo
 
             // Generate activation token and expiry date
             $token = bin2hex(random_bytes(32));
