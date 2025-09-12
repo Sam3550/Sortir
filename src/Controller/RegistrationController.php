@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
                 // User exists, redirect to login (or display message)
                 $this->addFlash('warning', 'Cette adresse e-mail est déjà enregistrée. Veuillez vous connecter.');
                 // TODO: Replace with your actual login route if available
-                return $this->redirectToRoute('app_home'); // Redirect to home for now, user can then go to login
+                return $this->redirectToRoute('app_login'); // Redirect to home for now, user can then go to login
             }
 
             // User does not exist, create initial participant and send activation email
@@ -118,6 +118,10 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+        if (str_starts_with($participant->getPseudo(), 'temp_')) {
+            $participant->setPseudo('');
+        }
+
         $form = $this->createForm(RegistrationFormType::class, $participant);
         $form->handleRequest($request);
 
@@ -156,11 +160,5 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/check-pseudo', name: 'app_check_pseudo', methods: ['GET'])]
-    public function checkPseudo(Request $request, ParticipantRepository $participantRepository): JsonResponse
-    {
-        dump($request);
-        die('Request reached checkPseudo method.');
-        // return new JsonResponse(['isUnique' => true, 'message' => 'Test response.']);
-    }
+    
 }

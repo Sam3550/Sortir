@@ -23,7 +23,7 @@ class Participant implements \Symfony\Component\Security\Core\User\PasswordAuthe
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 50, unique: true, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 20, nullable: true)]

@@ -12,7 +12,7 @@ security:
                 property: mail
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js|check-pseudo)/
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
@@ -28,12 +28,11 @@ security:
                 username_parameter: email
             logout:
                 path: app_logout
-                target: app_home
+                target: app_entry
     access_control:
         # The login flow paths must be public
         - { path: ^/entry, roles: PUBLIC_ACCESS }
         - { path: ^/entry/password, roles: PUBLIC_ACCESS }
-        - { path: ^/check-pseudo, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
         - { path: ^/inscription/finaliser, roles: PUBLIC_ACCESS }
         - { path: ^/reset-password, roles: PUBLIC_ACCESS }

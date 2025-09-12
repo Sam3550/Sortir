@@ -20,7 +20,7 @@ final class HomeController extends AbstractController
             return $this->redirectToRoute('sortie_list');
         }
 
-        return $this->redirectToRoute('app_entry');
+        return $this->redirectToRoute('app_register_check_email');
     }
 
     #[Route('/profil', name: 'app_profile')]

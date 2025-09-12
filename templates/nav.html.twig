@@ -16,12 +16,12 @@
                 </div>
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                     <div class="flex shrink-0 items-center">
-                        <a href="{{ path('sortie_list') }}" aria-current="page" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"><img src="{{ asset('img/fw.png')}}" alt="Your Company" class="h-10 w-auto" /></a>
+                        <a href="{{ path('sortie_list') }}" aria-current="page" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"><img src="{{ asset('img/fw.png')}}" alt="KAKAPO" class="h-10 w-auto"/></a>
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                            {% if app.user %}
+                            {% if is_granted('ROLE_USER') %}
                             <a href="{{ path('sortie_addSortie') }}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white">Ajouter une sortie</a>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
@@ -70,12 +70,8 @@
 
         <el-disclosure id="mobile-menu" hidden class="block sm:hidden">
             <div class="space-y-1 px-2 pt-2 pb-3">
-                {% if app.user %}
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-
-                {% if app.user %}
+                {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('sortie_addSortie') }}" aria-current="page" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white">Ajouter une sortie</a>
-                {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('app_admin_index') }}" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white">Administration</a>
                 {% endif %}

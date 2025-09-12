@@ -25,7 +25,7 @@
                             </div>
                             <div class="mb-3">
                                 {{ form_label(registrationForm.pseudo) }}
-                                {{ form_widget(registrationForm.pseudo, {'attr': {'data-check-pseudo-url': path('app_check_pseudo')|e('html_attr')}})}}
+                                {{ form_widget(registrationForm.pseudo) }}
                                 {{ form_errors(registrationForm.pseudo) }}
                             </div>
                             <div class="mb-3">
@@ -69,7 +69,4 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/pseudoCheck.js') }}"></script>
 {% endblock %}

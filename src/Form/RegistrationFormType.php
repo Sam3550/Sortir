@@ -32,6 +32,16 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un pseudo.',
+                    ]),
+                    new Length([
+                        'min' => 3,
+                        'minMessage' => 'Votre pseudo doit contenir au moins {{ limit }} caractères',
+                        'max' => 50,
+                    ]),
+                ],
             ])
             ->add('nom', TextType::class, [
                 'label' => 'Nom',
