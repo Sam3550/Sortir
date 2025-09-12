@@ -40,8 +40,9 @@ final class SortieController extends AbstractController
         $etatService->updateEtat($sorties);
         //Filtre la sortie si l'etat est creee mais que je ne suis pas l'organisateur alors je ne l'affiche pas
         $user = $this->getUser();
-        $sorties = array_filter($sorties, function (Sortie $sortie) use ($user) {
-            return !($sortie->getEtat()->getLibelle() === \App\Entity\Etat::CREEE && $sortie->getOrganisateur() !== $user);
+                $sorties = array_filter($sorties, function (Sortie $sortie) use ($user) {
+            $etat = $sortie->getEtat();
+            return !($etat && $etat->getLibelle() === \App\Entity\Etat::CREEE && $sortie->getOrganisateur() !== $user);
         });
 
         dump($sorties);
