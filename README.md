@@ -8,7 +8,9 @@ Bienvenue sur le projet Sortir.com. Ce document détaille la procédure d'instal
     - PHP 8.2+
     - MySQL 8.0+ ou MariaDB
 - **Composer** (Gestionnaire de dépendances PHP)
-- **Git**
+- **Git**   (Outil de versionning)
+- **Node.js** (Environnement d'exécution JavaScript)
+- **Npm** (Gestionnaire de paquets JavaScript)
 
 ## Installation
 
@@ -21,6 +23,7 @@ cd Sortir
 
 ### 2. Installation des dépendances
 ```bash
+composer update
 composer install
 ```
 
@@ -71,7 +74,7 @@ APP_MAILER_FROM=contact@funwithsss.fr
 Une fois connecté en tant qu'administrateur, accédez au panneau d'administration : `http://sortir.test/admin`.
 
 ### Import CSV
-Dans l'administration, vous pouvez importer des utilisateurs en masse via un fichier CSV.
+Dans l'administration, vous pouvez importer des utilisateurs en masse via un fichier CSV, ces derniers recevront par la suite un email de finalisation de leur inscription (fichier d'exemple à la racine du projet).
 - Colonnes requises : `mail`. (Les autres colonnes sont optionnelles).
 
 ---
