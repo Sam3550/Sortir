@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Lieu{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">✏️ <span class="page-title-gradient">Modifier le Lieu</span></h1>
+
+    <div class="card max-w-2xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <h2>{{ lieu.nom }}</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'p-6 space-y-6'}}) }}
+            
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div class="md:col-span-2">
+                     {{ form_label(form.nom, 'Nom du lieu', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.nom) }}
+                 </div>
+                 <div class="md:col-span-2">
+                     {{ form_label(form.rue, 'Rue', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.rue, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.rue) }}
+                 </div>
+                 <div>
+                     {{ form_label(form.latitude, 'Latitude', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.latitude, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.latitude) }}
+                 </div>
+                 <div>
+                     {{ form_label(form.longitude, 'Longitude', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.longitude, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.longitude) }}
+                 </div>
+                 <div class="md:col-span-2">
+                     {{ form_label(form.ville, 'Ville', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.ville, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.ville) }}
+                 </div>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mt-6">
+                 {{ include('admin/lieu/_delete_form.html.twig') }}
+                 
+                 <div class="flex gap-3 w-full sm:w-auto justify-end">
+                    <a href="{{ path('app_lieu_index') }}" class="btn btn-secondary">Annuler</a>
+                    <button class="btn btn-primary">Enregistrer</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

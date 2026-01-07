@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">⚙️ <span class="page-title-gradient">Mon Profil</span></h1>
+
+    <div class="card max-w-2xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            </div>
+            <h2>Modifier mes informations</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'divide-y divide-gray-100'}}) }}
+        
+        <div class="p-6 text-center">
+             <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl shadow-lg mb-4">
+                {{ app.user.prenom|first }}{{ app.user.nom|first }}
+            </div>
+            <h3 class="text-xl font-bold text-gray-900">{{ app.user.prenom }} {{ app.user.nom }}</h3>
+            <p class="text-gray-500">@{{ app.user.prenom|lower }}{{ app.user.nom|lower }}</p>
+        </div>
+
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(form.prenom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(form.prenom) }}
+                </div>
+                <div>
+                     {{ form_label(form.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.nom) }}
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(form.telephone, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.telephone, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(form.telephone) }}
+                </div>
+                <div>
+                     {{ form_label(form.mail, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.mail, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 bg-gray-50 text-gray-500 cursor-not-allowed'}}) }}
+                     {{ form_errors(form.mail) }}
+                </div>
+            </div>
+
+            <div>
+                 {{ form_label(form.campus, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                 {{ form_widget(form.campus, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                 {{ form_errors(form.campus) }}
+            </div>
+
+            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
+                <h4 class="text-sm font-medium text-yellow-800 mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Changer de mot de passe <span class="font-normal opacity-75">(laisser vide pour conserver)</span>
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                         {{ form_widget(form.motPasse.first, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Nouveau mot de passe'}}) }}
+                         {{ form_errors(form.motPasse.first) }}
+                    </div>
+                    <div>
+                         {{ form_widget(form.motPasse.second, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Confirmer le mot de passe'}}) }}
+                         {{ form_errors(form.motPasse.second) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-gray-50 border-t border-gray-100 flex flex-col-reverse sm:flex-row justify-between gap-4 rounded-b-xl">
+            <a href="{{ path('sortie_list') }}" class="btn btn-secondary justify-center">Annuler</a>
+            <button type="submit" class="btn btn-primary justify-center shadow-md hover:shadow-lg transform transition hover:-translate-y-0.5">Enregistrer les modifications</button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

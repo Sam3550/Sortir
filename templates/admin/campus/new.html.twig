@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Campus{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">🏫 <span class="page-title-gradient">Ajouter un Campus</span></h1>
+
+    <div class="card max-w-lg mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            </div>
+            <h2>Nouveau campus</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'p-6 space-y-6'}}) }}
+            <div>
+                 {{ form_label(form.nom, 'Nom du campus', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                 {{ form_widget(form.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Ex: ENI Nantes'}}) }}
+                 {{ form_errors(form.nom) }}
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 flex justify-end gap-3 mt-6">
+                <a href="{{ path('app_campus_index') }}" class="btn btn-secondary">Annuler</a>
+                <button class="btn btn-primary">Créer</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

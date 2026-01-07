@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les Lieux{% endblock %}
+
+{% block body %}
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+        <h1 class="page-title mb-0">📍 <span class="page-title-gradient">Lieux</span></h1>
+        <a href="{{ path('app_lieu_new') }}" class="btn btn-primary">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+            Ajouter un lieu
+        </a>
+    </div>
+
+    <div class="card fade-in">
+        <div class="table-wrapper-scroll">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th class="w-20">ID</th>
+                        <th>Nom du lieu</th>
+                        <th>Rue</th>
+                        <th>Coordonnées</th>
+                        <th class="w-32 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for lieu in lieus %}
+                    <tr>
+                        <td class="text-gray-500">#{{ lieu.id }}</td>
+                        <td class="font-medium text-gray-900">
+                            {{ lieu.nom }}
+                            {% if lieu.ville %}
+                                <span class="block text-xs text-gray-500 font-normal">{{ lieu.ville.nom }} ({{ lieu.ville.codePostal }})</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-gray-600 truncate max-w-xs">{{ lieu.rue }}</td>
+                        <td class="text-xs text-gray-500 font-mono">
+                            Lat: {{ lieu.latitude|default('N/A') }}<br>
+                            Lng: {{ lieu.longitude|default('N/A') }}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}" class="action-link action-edit inline-flex">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-gray-500">
+                            Aucun lieu trouvé
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="mt-6">
+        <a href="{{ path('app_admin_index') }}" class="btn btn-secondary inline-flex">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Retour au tableau de bord
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ participant.prenom }} {{ participant.nom }}{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">👤 <span class="page-title-gradient">Profil participant</span></h1>
+
+    <div class="card max-w-2xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            </div>
+            <h2>{{ participant.prenom }} {{ participant.nom }}</h2>
+            <span class="badge badge-info ml-auto">{{ participant.campus.nom }}</span>
+        </div>
+
+        <div class="p-6 text-center border-b border-gray-100">
+             <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl shadow-lg mb-4">
+                {{ participant.prenom|first }}{{ participant.nom|first }}
+            </div>
+            <h3 class="text-xl font-bold text-gray-900">@{{ participant.prenom|lower }}{{ participant.nom|lower }}</h3>
+            {% if participant.organisateur %}
+                 <span class="inline-block mt-2 px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Organisateur</span>
+            {% endif %}
+        </div>
+
+        <div class="p-6 space-y-4">
+            <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                <span class="text-gray-500 w-24 flex-shrink-0">Campus :</span>
+                <span class="font-medium text-gray-900">{{ participant.campus.nom }}</span>
+            </div>
+             <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                <span class="text-gray-500 w-24 flex-shrink-0">Email :</span>
+                <span class="font-medium text-gray-900">{{ participant.mail }}</span>
+            </div>
+            {% if participant.telephone %}
+            <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                <span class="text-gray-500 w-24 flex-shrink-0">Téléphone :</span>
+                <span class="font-medium text-gray-900">{{ participant.telephone }}</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-center">
+             <a href="{{ path('sortie_list') }}" class="btn btn-secondary">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Retour à la liste
+             </a>
+        </div>
+    </div>
+{% endblock %}

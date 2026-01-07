@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Finalisez votre inscription</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f3f4f6; color: #374151;">
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-height: 100vh; background-color: #f3f4f6;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
+                    <!-- Header -->
+                    <tr>
+                        <td align="center" style="background-color: #4f46e5; padding: 24px;">
+                            <h1 style="margin: 0; font-size: 24px; color: #ffffff; font-weight: bold;">Sortir.com</h1>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 32px 32px 24px 32px;">
+                            <h2 style="margin-top: 0; color: #111827; font-size: 20px;">Bienvenue ! 👋</h2>
+                            <p style="margin-bottom: 24px; line-height: 1.6; color: #4b5563;">
+                                Merci de vous être inscrit sur <strong>Sortir.com</strong>. Nous sommes ravis de vous compter parmi nous !
+                            </p>
+                            <p style="margin-bottom: 32px; line-height: 1.6; color: #4b5563;">
+                                Pour finaliser votre inscription et accéder à toutes les sorties, il ne vous reste plus qu'une étape. Cliquez sur le bouton ci-dessous pour confirmer votre adresse email :
+                            </p>
+                            
+                            <!-- Button -->
+                            <div align="center">
+                                <a href="{{ signedUrl|raw }}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; font-weight: bold; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; transition: background-color 0.3s ease;">
+                                    Finaliser mon inscription
+                                </a>
+                            </div>
+                            
+                            <p style="margin-top: 32px; font-size: 14px; color: #6b7280; font-style: italic;">
+                                Ce lien est valable pendant {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f9fafb; padding: 24px; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+                                &copy; {{ "now"|date("Y") }} Sortir.com. Tous droits réservés.<br>
+                                C'est fun, c'est sympa, c'est Sortir.com !
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <!-- Spacer for mobile -->
+                <div style="height: 40px;"></div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bienvenue!{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href={{ asset('styles/app.css')}} />
+</head>
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+<header>
+    {% if app.user %}
+        {% include 'nav.html.twig' %}
+    {% endif %}
+</header>
+<main class="flex-grow">
+    <div class="container mx-auto px-4 max-w-6xl py-8">
+        {% block body %}{% endblock %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div id="flash-message"
+                     class="fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg text-white
+                    {% if label == 'success' %} bg-green-500
+                    {% elseif label == 'error' %} bg-red-500
+                    {% else %} bg-blue-500 {% endif %}">
+                    {{ message }}
+                </div>
+
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('flash-message')?.remove();
+                    }, 4000);
+                </script>
+            {% endfor %}
+        {% endfor %}
+
+    </div>
+</main>
+
+<footer class="py-8 text-center text-sm text-gray-400">
+    <div class="container mx-auto px-4">
+        <p class="mb-2">&copy; 2026 Réalisé par <span class="font-semibold text-indigo-400">FunWithSSS</span></p>
+        <p class="text-xs text-gray-300">L'agence qui rend vos sorties inoubliables</p>
+    </div>
+</footer>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

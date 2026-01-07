@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une sortie{% endblock %}
+
+{% block body %}
+    <h1 class="page-title"><span class="page-title-gradient">Créer une sortie</span></h1>
+
+    <div class="card max-w-5xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h2>Nouvelle aventure</h2>
+        </div>
+
+        {{ form_start(addSortieForm, {'attr': {'class': 'divide-y divide-gray-100'}}) }}
+        
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                {# COLONNE GAUCHE : INFOS #}
+                <div class="space-y-5">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 pb-2 border-b border-gray-100">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Informations générales
+                    </h3>
+                    
+                    <div>
+                        {{ form_label(addSortieForm.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                        {{ form_widget(addSortieForm.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        {{ form_errors(addSortieForm.nom) }}
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                             {{ form_label(addSortieForm.dateHeureDebut, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.dateHeureDebut, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             {{ form_errors(addSortieForm.dateHeureDebut) }}
+                        </div>
+                        <div>
+                             {{ form_label(addSortieForm.dateLimiteInscription, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.dateLimiteInscription, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             <span id="error_date" class="text-xs text-red-500 mt-1 block"></span>
+                             {{ form_errors(addSortieForm.dateLimiteInscription) }}
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                             {{ form_label(addSortieForm.nbInscriptionMax, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.nbInscriptionMax, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             {{ form_errors(addSortieForm.nbInscriptionMax) }}
+                        </div>
+                        <div>
+                             {{ form_label(addSortieForm.duree, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             <div class="relative">
+                                {{ form_widget(addSortieForm.duree, {'attr': {'class': 'form-input w-full pr-12 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                                <span class="absolute right-3 top-2 text-gray-400 text-sm">min</span>
+                             </div>
+                             {{ form_errors(addSortieForm.duree) }}
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form_label(addSortieForm.infosSortie, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                        {{ form_widget(addSortieForm.infosSortie, {'attr': {'class': 'form-textarea w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'rows': 4}}) }}
+                        {{ form_errors(addSortieForm.infosSortie) }}
+                    </div>
+                </div>
+
+                {# COLONNE DROITE : LIEU #}
+                <div class="space-y-5">
+                    <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2 pb-2 border-b border-gray-100">
+                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Localisation
+                    </h3>
+
+                    <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                        <label class="block text-sm font-medium text-indigo-900 mb-3">Où se passe la sortie ?</label>
+                        <div class="flex flex-wrap gap-4">
+                            {% for child in addSortieForm.lieuType %}
+                                <label class="inline-flex items-center cursor-pointer bg-white px-3 py-2 rounded shadow-sm border border-indigo-200 hover:border-indigo-400 transition">
+                                    {{ form_widget(child, {'attr': {'class': 'lieu-type-radio text-indigo-600 focus:ring-indigo-500'}}) }}
+                                    <span class="ml-2 text-sm text-gray-700 font-medium">{{ child.vars.label }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# Option 1 : Existant #}
+                    <div id="section-existant" class="lieu-section bg-gray-50 p-5 rounded-lg border border-gray-200 space-y-4">
+                        <div>
+                             {{ form_label(addSortieForm.ville, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.ville, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        </div>
+                        <div>
+                             {{ form_label(addSortieForm.lieu, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.lieu, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        </div>
+                    </div>
+
+                    {# Option 2 : Adresse #}
+                    <div id="section-adresse" class="lieu-section hidden bg-white p-5 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                        <div>
+                            {{ form_label(addSortieForm.nouveauLieuNom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                            {{ form_widget(addSortieForm.nouveauLieuNom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-1">
+                                {{ form_label(addSortieForm.nouveauLieuNumero, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                                {{ form_widget(addSortieForm.nouveauLieuNumero, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Rue</label>
+                                {{ form_widget(addSortieForm.nouveauLieuRue, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                             <div>
+                                 {{ form_label(addSortieForm.nouveauLieuCodePostal, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                                 {{ form_widget(addSortieForm.nouveauLieuCodePostal, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                                 {{ form_widget(addSortieForm.nouveauLieuVille, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             </div>
+                        </div>
+                    </div>
+
+                    {# Option 3 : GPS #}
+                    <div id="section-gps" class="lieu-section hidden bg-white p-5 rounded-lg border border-gray-200 shadow-sm space-y-4">
+                        <div>
+                             {{ form_label(addSortieForm.gpsNom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.gpsNom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        </div>
+                         <div class="grid grid-cols-2 gap-3">
+                             <div>
+                                 {{ form_label(addSortieForm.gpsLatitude, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                                 {{ form_widget(addSortieForm.gpsLatitude, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             </div>
+                             <div>
+                                 {{ form_label(addSortieForm.gpsLongitude, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                                 {{ form_widget(addSortieForm.gpsLongitude, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                             </div>
+                         </div>
+                         <div>
+                             {{ form_label(addSortieForm.gpsVille, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                             {{ form_widget(addSortieForm.gpsVille, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-gray-50 border-t border-gray-100 flex justify-center gap-4">
+            {{ form_widget(addSortieForm.enregistrer, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_widget(addSortieForm.publier, {'attr': {'class': 'btn btn-success'}}) }}
+            {{ form_widget(addSortieForm.annuler, {'attr': {'class': 'btn btn-secondary bg-white'}}) }}
+        </div>
+
+        {{ form_end(addSortieForm) }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/comparaisonDate.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('.lieu-type-radio');
+            const sections = {
+                'existant': document.getElementById('section-existant'),
+                'adresse': document.getElementById('section-adresse'),
+                'gps': document.getElementById('section-gps')
+            };
+
+            function updateSections() {
+                const selected = document.querySelector('.lieu-type-radio:checked');
+                if (!selected) return;
+
+                const value = selected.value;
+                
+                // Masquer toutes les sections
+                Object.values(sections).forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Afficher la section sélectionnée
+                if (sections[value]) {
+                    sections[value].classList.remove('hidden');
+                }
+            }
+
+            // Écouteur sur chaque radio
+            radios.forEach(radio => {
+                radio.addEventListener('change', updateSections);
+            });
+
+            // Initialisation
+            updateSections();
+        });
+    </script>
+{% endblock %}

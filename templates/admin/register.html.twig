@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un utilisateur{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">👤 <span class="page-title-gradient">Créer un utilisateur</span></h1>
+
+    <div class="card max-w-2xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+            </div>
+            <h2>Nouveau compte</h2>
+        </div>
+
+        {{ form_start(registrationForm, {'attr': {'class': 'p-6 space-y-6'}}) }}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(registrationForm.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(registrationForm.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(registrationForm.nom) }}
+                </div>
+                <div>
+                    {{ form_label(registrationForm.prenom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(registrationForm.prenom) }}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(registrationForm.mail, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(registrationForm.mail, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(registrationForm.mail) }}
+                </div>
+                <div>
+                    {{ form_label(registrationForm.telephone, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(registrationForm.telephone, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(registrationForm.telephone) }}
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <h4 class="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Sécurité
+                </h4>
+                <div>
+                     {{ form_label(registrationForm.password, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(registrationForm.password, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Mot de passe initial'}}) }}
+                     {{ form_errors(registrationForm.password) }}
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                     {{ form_label(registrationForm.campus, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(registrationForm.campus, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(registrationForm.campus) }}
+                </div>
+                <div>
+                     {{ form_label(registrationForm.roles, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                     <div class="flex flex-wrap gap-3">
+                        {% for role in registrationForm.roles %}
+                            <label class="relative flex items-center gap-2 p-3 rounded-lg border border-gray-200 bg-gray-50 cursor-pointer hover:bg-white hover:border-indigo-300 transition-all">
+                                {{ form_widget(role, {'attr': {'class': 'form-radio h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500'}}) }}
+                                <span class="text-sm font-medium text-gray-900">{{ role.vars.label|trans }}</span>
+                            </label>
+                        {% endfor %}
+                     </div>
+                     {{ form_errors(registrationForm.roles) }}
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 flex justify-end gap-3">
+                <a href="{{ path('app_admin_index') }}" class="btn btn-secondary">Annuler</a>
+                <button type="submit" class="btn btn-primary">Créer le compte</button>
+            </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

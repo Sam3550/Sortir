@@ -1,0 +1,40 @@
+{{ form_start(addSortieForm) }}
+    <div class="flex gap-4 w-auto mt-15">
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.nom, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.nom) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.dateHeureDebut, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.dateHeureDebut) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.dateLimiteInscription, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.dateLimiteInscription) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.nbInscriptionMax, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.nbInscriptionMax) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.duree, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.duree) }}
+            </div>
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.infosSortie, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.infosSortie) }}
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="flex items-center gap-4 mb-4 mx-4">
+                {{ form_label(addSortieForm.lieu, null, {'label_attr': {'class': 'w-40 text-base font-medium text-gray-700'}}) }}
+                {{ form_widget(addSortieForm.lieu) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-center gap-4 mt-4">
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(addSortieForm) }}

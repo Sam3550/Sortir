@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditer l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1 class="page-title"> <span class="page-title-gradient">Éditer l'utilisateur</span></h1>
+
+    <div class="card max-w-3xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            </div>
+            <h2>{{ participant.prenom }} {{ participant.nom }}</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'p-6 space-y-6'}}) }}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                     {{ form_row(form.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                </div>
+                <div>
+                     {{ form_row(form.prenom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    {{ form_row(form.mail, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                </div>
+                <div>
+                     {{ form_row(form.telephone, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                </div>
+            </div>
+            
+            {# Cas spécifique pour le mot de passe (RepeatedType avec first/second) #}
+            {% if form.motPasse is defined %}
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 col-span-1 md:col-span-2">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Sécurité (optionnel)
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            {{ form_label(form.motPasse.first, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                            {{ form_widget(form.motPasse.first, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Nouveau mot de passe'}}) }}
+                            {{ form_errors(form.motPasse.first) }}
+                        </div>
+                        <div>
+                            {{ form_label(form.motPasse.second, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                            {{ form_widget(form.motPasse.second, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Confirmer'}}) }}
+                            {{ form_errors(form.motPasse.second) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    {{ form_row(form.campus, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                </div>
+                 <div>
+                    {% if form.roles is defined %}
+                        {{ form_label(form.roles, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-2'}}) }}
+                         <div class="flex flex-wrap gap-2">
+                            {% for role in form.roles %}
+                                <label class="relative flex items-center gap-2 p-2 rounded-lg border border-gray-200 bg-gray-50 cursor-pointer hover:bg-white hover:border-indigo-300 transition-all">
+                                    {{ form_widget(role, {'attr': {'class': 'form-radio h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500'}}) }}
+                                    <span class="text-sm font-medium text-gray-900">{{ role.vars.label|trans }}</span>
+                                </label>
+                            {% endfor %}
+                         </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if form.actif is defined %}
+                <div class="mt-4 flex items-center">
+                    {{ form_widget(form.actif, {'attr': {'class': 'form-checkbox h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500'}}) }}
+                    {{ form_label(form.actif, null, {'label_attr': {'class': 'ml-2 text-sm text-gray-700 font-medium'}}) }}
+                </div>
+            {% endif %}
+            
+            {{ form_rest(form) }}
+
+            <div class="pt-6 border-t border-gray-100 flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mt-6">
+                <!-- Delete Form inclusion -->
+                {{ include('admin/participant/_delete_form.html.twig') }}
+
+                <div class="flex gap-3 w-full sm:w-auto justify-end">
+                    <a href="{{ path('app_admin_participant_index') }}" class="btn btn-secondary">Annuler</a>
+                    <button class="btn btn-primary">Enregistrer les modifications</button>
+                </div>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

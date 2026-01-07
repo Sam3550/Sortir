@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finaliser l'inscription{% endblock %}
+
+{% block body %}
+    <h1 class="page-title">✨ <span class="page-title-gradient">Bienvenue sur Sortir.com</span></h1>
+    <p class="text-center text-gray-500 mb-8 max-w-lg mx-auto">Vous y êtes presque ! Complétez ces quelques informations pour finaliser votre compte et rejoindre la communauté.</p>
+
+    <div class="card max-w-2xl mx-auto fade-in">
+        <div class="card-header">
+            <div class="icon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            </div>
+            <h2>Vos informations</h2>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'p-6 space-y-6'}}) }}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(form.prenom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(form.prenom) }}
+                </div>
+                <div>
+                     {{ form_label(form.nom, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.nom, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.nom) }}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    {{ form_label(form.telephone, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                    {{ form_widget(form.telephone, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                    {{ form_errors(form.telephone) }}
+                </div>
+                <div>
+                     {{ form_label(form.campus, null, {'label_attr': {'class': 'block text-sm font-medium text-gray-700 mb-1'}}) }}
+                     {{ form_widget(form.campus, {'attr': {'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'}}) }}
+                     {{ form_errors(form.campus) }}
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                <h4 class="text-sm font-medium text-indigo-800 mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    Sécurisez votre compte
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                         {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Mot de passe'}}) }}
+                         {{ form_errors(form.plainPassword.first) }}
+                    </div>
+                    <div>
+                         {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500', 'placeholder': 'Confirmer'}}) }}
+                         {{ form_errors(form.plainPassword.second) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100 flex justify-center">
+                <button type="submit" class="btn btn-primary w-full md:w-auto px-8 py-3 text-lg shadow-lg hover:shadow-xl transform transition hover:-translate-y-0.5">
+                    🚀 C'est parti !
+                </button>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
